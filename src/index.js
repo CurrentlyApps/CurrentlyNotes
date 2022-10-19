@@ -17,9 +17,7 @@ root.render(
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
     </Routes>
-  </Router>,
-
-  document.getElementById("root")
+  </Router>
 );
 
 // If you want to start measuring performance in your app, pass a function
