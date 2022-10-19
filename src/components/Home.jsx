@@ -1,5 +1,6 @@
 import SidePanel from "./SidePanel/SidePanel";
 import Editor from "./Editor/Editor";
+import Statusbar from "./Statusbar/Statusbar";
 import React, { useState, useEffect, createContext } from 'react';
 import { getDatabase, ref, onValue } from "firebase/database";
 import { app } from "../services/firebase";
@@ -11,13 +12,20 @@ import { getAuth } from "firebase/auth";
 export const AppContext = createContext()
 
 function Home() {
-  const [currentNote, setCurrentNote] = useState(null)
+  const [currentNote, setCurrentNote] = useState(null);
   const [noteList, setNoteState] = useState({});
-  const [user, setUserState] = useState(null)
+  const [user, setUserState] = useState(null);
+  const [editState, setEditState] = useState(false);
+  const [extended, setExtendedState] = useState(true)
 
   const context = {
-    firebase: app,
     user: user,
+    noteList: noteList,
+    currentNote: currentNote,
+    editState: editState,
+    extended: extended,
+    setExtendedState: setExtendedState,
+    setEditState: setEditState,
     setUserState: setUserState,
     setCurrentNote: setCurrentNote
   }
@@ -25,7 +33,7 @@ function Home() {
   useEffect(() => {
     getAuth().onAuthStateChanged(function(user) {
       if( user ) {
-        context.setUserState(user);
+        setUserState(user);
         const db = getDatabase(app);
         const notesRef = ref(db, `/notes/users/${user.uid}/notes`);
         onValue(notesRef, (snapshot) => {
@@ -37,7 +45,7 @@ function Home() {
           }
         });
       } else {
-        context.setUserState(null);
+        setUserState(null);
       }
     });
     
@@ -45,13 +53,16 @@ function Home() {
 
   return (
     <AppContext.Provider value={context}>
-      <div className="w-screen h-screen flex flex-row">
-        <SidePanel notes={ noteList } noteClicked={ noteClicked } newNoteClicked={ newNoteClicked } currentNote={ currentNote } />
-        {
-          currentNote === null
-          ? <div className="container mx-auto px-96 pt-10 text-center text-zinc-500"> Select a note on the left, or create a new one! </div>
-          : <Editor note={ noteList[currentNote] } updateNote={ updateNote }/>
-        }
+      <div className="flex flex-col w-screen h-screen">
+        <Statusbar/>
+        <div className="w-full grow flex flex-row">
+          <SidePanel />
+          {
+            currentNote === null
+            ? <div className="lg-px-20 px-5 py-10  text-zinc-400"> Select a note on the left, or create a new one! </div>
+            : <Editor note={ noteList[currentNote] } />
+          }
+        </div>
       </div>
     </AppContext.Provider>
   );
