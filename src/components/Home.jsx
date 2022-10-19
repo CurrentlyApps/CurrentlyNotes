@@ -1,17 +1,9 @@
 import SidePanel from "./SidePanel/SidePanel";
 import Editor from "./Editor/Editor";
 import React, { useState, useEffect, createContext } from 'react';
-import { getDatabase, ref, onValue, set } from "firebase/database";
-import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
-
-
-// Firebase
-const firebaseConfig = {
-  
-};
-
-const app = initializeApp(firebaseConfig);
+import { getDatabase, ref, onValue } from "firebase/database";
+import { app } from "../services/firebase";
+import { getAuth } from "firebase/auth";
 
 
 
@@ -50,30 +42,6 @@ function Home() {
     });
     
   }, []);
-
-  const noteClicked = function(id) {
-    setCurrentNote(id)
-  }
-
-  const newNoteClicked = function() {
-    const db = getDatabase(context.app);
-    const notesRef = ref(db, `notes/users/${context.user.uid}/notes`);
-    
-    let newId = Object.keys(noteList).length + 1;
-    let tempState = { ...noteList }
-    tempState[newId] = {
-      id: newId,
-      title: "New Note",
-      body: ""
-    }
-    set(notesRef, tempState).then( () => setCurrentNote(newId))
-  }
-
-  const updateNote = function(note){
-    const db = getDatabase(context.app);
-    const notesRef = ref(db, `notes/users/${context.user.uid}/notes/${note.id}`);
-    set(notesRef, note)
-  } 
 
   return (
     <AppContext.Provider value={context}>
