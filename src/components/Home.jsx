@@ -59,7 +59,7 @@ function Home() {
           <SidePanel />
           {
             currentNote === null
-            ? <div className="lg-px-20 px-5 py-10  text-zinc-400"> Select a note on the left, or create a new one! </div>
+            ? <div className="lg:px-20 px-5 py-10 w-full h-full lg:py-4 text-zinc-400"> Select a note on the left, or create a new one! </div>
             : <Editor note={ noteList[currentNote] } />
           }
         </div>
