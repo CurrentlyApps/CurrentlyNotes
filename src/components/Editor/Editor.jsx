@@ -26,7 +26,7 @@ export default function Editor(props) {
                 <>
                     <div className="flex flex-col w-full h-full lg:pl-20 px-5 overflow-y-auto">
                         <div className="font-light">
-                            Markup
+                            Edit Markup
                             <hr />
                         </div>
                         <input 
@@ -57,7 +57,7 @@ export default function Editor(props) {
                 <div className="font-semibold text-lg">
                     { props.note.title }
                 </div>
-                <div className="text-lg">
+                <div className="text-lg is_markdown">
                 {
                     parse(converter.makeHtml(props.note.body))
                 }

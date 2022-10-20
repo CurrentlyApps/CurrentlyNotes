@@ -33,3 +33,7 @@ code {
 .dropDown:hover .dropDownContent {
   display: block;
 }
+
+div.is_markdown * {
+  all:revert !important;
+}
