@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { set, getDatabase, ref } from "firebase/database";
+import { getAnalytics, logEvent } from "firebase/analytics";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_apiKey,
@@ -14,18 +15,22 @@ const firebaseConfig = {
 };
 
 export const app = initializeApp(firebaseConfig);
+export const analytics = getAnalytics(app);
+
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
 const db = getDatabase(app);
 
 
 export const signOutClick = function(context) {    
+    logEvent(analytics, 'signed_out');
     signOut(auth);
     context.setUserState( null );
     context.setCurrentNote( null );
 }
 
 export const signIn = function(context) {
+    logEvent(analytics, 'signed_in');
     signInWithPopup(auth, provider)
         .then((result) => {
             // const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -41,13 +46,14 @@ export const signIn = function(context) {
 }
 
 export const deleteNote = function(noteId, context) {
-    
+    logEvent(analytics, 'note_deleted');
     const notesRef = ref(db, `/notes/users/${context.user.uid}/notes/${noteId}`);
     context.setCurrentNote(null);
     set(notesRef, null);
 }
 
 export const newNoteClicked = function(context) {
+    logEvent(analytics, 'note_added');
     const notesRef = ref(db, `notes/users/${context.user.uid}/notes`);
     let newId = Object.keys(context.noteList).length + 1;
     let tempState = { ...context.noteList }
