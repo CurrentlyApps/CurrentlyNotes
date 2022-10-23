@@ -18,10 +18,14 @@ export default function SidePanel(props) {
                         { context.user.displayName }
                     </div>
                     <div className="cursor-pointer text-sm px-4 pb-4 text-red-600 block lg:hidden" onClick={ () => {signOutClick(context)} }>Logout</div>
-
-                    <div onClick={() => newNoteClicked(context)}
-                    className='px-4 py-2 font-bold flex flex-row text-zinc-500 transition-all duration-150 cursor-pointer hover:text-zinc-800'>
-                        New Note <DocumentPlusIcon className="w-4  ml-auto "></DocumentPlusIcon>
+                    <div className='flex flex-row text-lg font-semibold px-4 pt-3'>
+                        Your Notes
+                        <div className='ml-auto'>
+                            <div className='flex flex-row mt-1 transition-all'>
+                                
+                                <DocumentPlusIcon className='w-4 hover:text-zinc-700 cursor-pointer ml-2' onClick={() => newNoteClicked(context)}  />
+                            </div>
+                        </div>
                     </div>
                 </>
                 : <div className="cursor-pointer text-lg text-zinc-800 font-bold px-4 py-2 block lg:hidden" onClick={ () => {signIn(context)} }> Login</div>
