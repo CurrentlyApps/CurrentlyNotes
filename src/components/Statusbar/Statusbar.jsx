@@ -13,10 +13,10 @@ export default function Statusbar() {
         }
     }
     return (
-        <div className="w-full h-30 text-white bg-black px-14 py-2 flex justify-between">
-            <div className="lg:font-extrabold w-1/3 text-lg mr-auto flex flex-row cursor-pointer" onClick={ () => { context.setExtendedState(!context.extended) } }>
-                <div className="py-auto align-middle py-auto my-auto mr-5 tracking-widest uppercase">Currently</div>
-                <Bars3Icon className={`${context.extended ? 'rotate-180' : ''} transition-all w-5 h-5 my-auto ml-2`} />
+        <div className="w-full h-30 text-zinc-200 bg-black lg:px-14 px-2 py-2 flex justify-between">
+            <div className="lg:font-extrabold lg:w-1/3 lg:text-lg mr-auto flex flex-row cursor-pointer" onClick={ () => { context.setExtendedState(!context.extended) } }>
+                <div className="py-auto align-middle my-auto mr-1 tracking-widest uppercase hidden lg:block">Currently</div>
+                <Bars3Icon className={`${context.extended ? 'rotate-180' : ''} transition-all w-7 h-7 my-auto lg:ml-2`} />
 
             </div>
 
@@ -25,7 +25,7 @@ export default function Statusbar() {
                     context.currentNote == null
                     ? ""
                     :
-                    <div className="text-md flex flex-row gap-4">
+                    <div className="lg:text-md flex flex-row gap-4">
                         <div
                         onClick={ () => { setState(false, true) } }
                         className={`transition-all ${context.editState ? "text-zinc-500 cursor-pointer" : "text-white underline underline-offset-8 decoration-2"}`}>
