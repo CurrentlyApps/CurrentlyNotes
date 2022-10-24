@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './assets/css/index.css';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import {
   Home,
-  About
+  PublishedPage
 } from "./components";
 
 
@@ -15,7 +15,7 @@ root.render(
   <Router>
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/storage/:user_id/:post_id" element={<About />} />
+      <Route path="/storage/:user_id/:post_id" element={<PublishedPage />} />
     </Routes>
   </Router>
 );
