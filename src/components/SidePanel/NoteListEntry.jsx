@@ -9,10 +9,10 @@ export default function NoteListEntry(props) {
     const context = useContext(AppContext)
     const note = props.note
     return (
-        <div key={note.id} className="flex flex-row transition-all hover:bg-zinc-300">
+        <div key={note.id} className={`flex flex-row transition-all hover:bg-zinc-300 ${context.currentNote === note.id ? 'font-bold bg-zinc-400 text-slate-100':'font-normal text-zinc-700'}`}>
             <div
             onClick={() => context.setCurrentNote(note.id) }
-            className={`px-4 py-1   w-full cursor-pointer font-mono tracking-tighter  ${context.currentNote === note.id ? 'font-bold bg-zinc-400 text-slate-100':'font-normal text-zinc-500'}`}>
+            className={`px-4 py-1 truncate overflow-hidden text-sm w-full cursor-pointer font-mono tracking-tighter `}>
                 { note.title !== "" ? note.title : "Untitled" }
             </div>
             <Dropdown class="py-auto" >
