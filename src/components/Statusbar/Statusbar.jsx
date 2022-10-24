@@ -13,7 +13,7 @@ export default function Statusbar() {
         }
     }
     return (
-        <div className="w-full h-30 text-zinc-200 bg-black lg:px-14 px-2 py-2 flex justify-between">
+        <div className="w-full h-30 text-zinc-200 bg-black lg:px-4 px-2 py-2 flex justify-between">
             <div className="lg:font-extrabold lg:w-1/3 lg:text-lg mr-auto flex flex-row cursor-pointer" onClick={ () => { context.setExtendedState(!context.extended) } }>
                 <div className="py-auto align-middle my-auto mr-1 tracking-widest uppercase hidden lg:block">Currently</div>
                 <Bars3Icon className={`${context.extended ? 'rotate-180' : ''} transition-all w-7 h-7 my-auto lg:ml-2`} />
