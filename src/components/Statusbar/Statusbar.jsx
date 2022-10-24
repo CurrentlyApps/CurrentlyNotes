@@ -42,7 +42,8 @@ export default function Statusbar() {
             </div>
 
             <div className="lg:flex hidden w-1/3 mr-3 justify-end ">
-                <Dropdown label={ context.user ? context.user.displayName : 'Not Logged In'}>
+                { context.user ? <img class="w-9 h-9 rounded-full mr-1" src={context.user.photoURL} alt="Rounded avatar"/> : ''}
+                <Dropdown label={ context.user ? context.user.displayName : 'Not Logged In'} class="bg-transparent">
                     <Dropdown.Header>
                         { 
                             context.user == null
