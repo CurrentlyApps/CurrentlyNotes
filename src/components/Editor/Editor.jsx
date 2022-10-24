@@ -20,6 +20,20 @@ export default function Editor(props) {
         updateNote(tempNote, context)
     }
 
+    const handleTab = e => {
+        if (e.key === 'Tab') {
+            const target = e.target
+            e.preventDefault();
+
+            var start = target.selectionStart;
+            var end = target.selectionEnd;
+        
+            target.value = target.value.substring(0, start) + "\t\t\t\t\t" + target.value.substring(end);
+            target.selectionStart = target.selectionEnd = start + 1;
+        }
+    }
+    
+
     if (context.currentNote === null) {
         return (
             <div className="pt-10 grow lg:py-4 text-zinc-500 text-center lg:w-4/5 w-1/5"> 
@@ -39,7 +53,7 @@ export default function Editor(props) {
                     context.editState === true &&
                     <>
                         <div className="flex flex-col lg:w-1/2 w-full lg:pl-20 lg:px-5 pl-4 pr-1 lg:h-full h-1/2 resize-y">
-                            <div className="font-light">
+                            <div className="font-light px-3">
                                 Edit Markup
                                 <hr />
                             </div>
@@ -51,6 +65,7 @@ export default function Editor(props) {
                             type="text" />
                             
                             <textarea
+                            onKeyDown={ handleTab }
                             className="h-full border-none outline-none focus:ring-0 overflow-auto scrollbar_thin resize-none"
                             value={ props.note.body }
                             onChange={ updateBody }
