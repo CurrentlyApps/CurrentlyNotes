@@ -34,7 +34,7 @@ export default function Editor(props) {
     }
     else {
         return (
-            <div className={`pt-5 flex lg:flex-row flex-col transition-all h-full overflow-hidden ${context.extended ? 'lg:w-4/5 w-1/5' : ''}`}>
+            <div className={`pt-5 flex lg:flex-row flex-col transition-all h-full overflow-hidden ${context.extended ? 'lg:w-4/5 w-1/5' : 'w-full'}`}>
                 {
                     context.editState === true &&
                     <>
