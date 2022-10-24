@@ -11,7 +11,7 @@ export default function Statusbar() {
         }
     }
     return (
-        <div className="w-full h-30 text-white bg-black px-4 py-2 flex justify-between">
+        <div className="w-full h-30 text-white bg-black px-14 py-2 flex justify-between">
             <div className="lg:font-extrabold w-1/3 text-lg mr-auto flex flex-row cursor-pointer" onClick={ () => { context.setExtendedState(!context.extended) } }>
                 <div className="py-auto align-middle py-auto my-auto mr-5 tracking-widest uppercase">Currently</div>
              
@@ -30,7 +30,7 @@ export default function Statusbar() {
                         <div
                         onClick={ () => { setState(false, true) } }
                         className={`transition-all ${context.editState ? "text-zinc-500 cursor-pointer" : "text-white underline underline-offset-8 decoration-2"}`}>
-                            View
+                            Preview
                         </div>
                         <div
                         onClick={ () => { setState(true, false) } }
@@ -41,7 +41,7 @@ export default function Statusbar() {
                 }
             </div>
 
-            <div className="lg:flex hidden w-1/3 mr-3 justify-end ">
+            <div className="lg:flex hidden w-1/3 justify-end ">
                 { context.user ? <img class="w-9 h-9 rounded-full mr-1" src={context.user.photoURL} alt="Rounded avatar"/> : ''}
                 <Dropdown label={ context.user ? context.user.displayName : 'Not Logged In'} class="bg-transparent">
                     <Dropdown.Header>

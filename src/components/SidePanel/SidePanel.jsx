@@ -9,7 +9,7 @@ export default function SidePanel(props) {
     const context = useContext(AppContext)
     
     return (
-        <div className={`bg-zinc-200 relative transition-all duration-200 ${context.extended ? 'w-96 lg-w-64' : '-translate-x-96 w-0' }`}>
+        <div className={`bg-zinc-200 relative transition-all duration-200 h-full ${context.extended ? 'w-1/5' : '-translate-x-96 w-0' }`}>
             { context.user
                 ? 
                 <>

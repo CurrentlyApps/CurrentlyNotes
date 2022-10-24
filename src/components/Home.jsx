@@ -53,22 +53,11 @@ function Home() {
 
   return (
     <AppContext.Provider value={context}>
-      <div className="flex flex-col w-screen h-screen">
+      <div className="flex flex-col w-screen h-screen overflow-hidden">
         <Statusbar/>
-        <div className="w-full grow flex flex-row">
+        <div className="flex flex-row h-screen overflow-auto">
           <SidePanel />
-          {
-            currentNote === null
-            ? <div className="lg:px-20 px-5 py-10 w-full h-full lg:py-4 text-zinc-500 text-center"> 
-              {
-                context.user
-                ? 'Select a note on the left, or create a new one!'
-                : 'Login now to get started!'
-              }
-            
-             </div>
-            : <Editor note={ noteList[currentNote] } />
-          }
+          <Editor note={ noteList[currentNote] } />
         </div>
       </div>
     </AppContext.Provider>
