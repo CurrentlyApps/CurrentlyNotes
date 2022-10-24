@@ -2,6 +2,7 @@ import { useContext } from "react"
 import { AppContext } from "../Home"
 import { signIn, signOutClick } from "../../services/firebase"
 import { Dropdown } from "flowbite-react"
+import { Bars3Icon } from "@heroicons/react/24/solid"
 
 export default function Statusbar() {
     const context = useContext(AppContext)
@@ -15,10 +16,7 @@ export default function Statusbar() {
         <div className="w-full h-30 text-white bg-black px-14 py-2 flex justify-between">
             <div className="lg:font-extrabold w-1/3 text-lg mr-auto flex flex-row cursor-pointer" onClick={ () => { context.setExtendedState(!context.extended) } }>
                 <div className="py-auto align-middle py-auto my-auto mr-5 tracking-widest uppercase">Currently</div>
-             
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`${context.extended ? 'rotate-180' : ''} transition-all w-5 h-5 my-auto ml-2`}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                </svg>
+                <Bars3Icon className={`${context.extended ? 'rotate-180' : ''} transition-all w-5 h-5 my-auto ml-2`} />
 
             </div>
 
