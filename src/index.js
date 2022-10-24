@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import {
   Home,
   PublishedPage
-} from "./components";
+} from "pages";
 
 
 

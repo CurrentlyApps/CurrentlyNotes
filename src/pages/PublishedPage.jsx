@@ -8,7 +8,10 @@ const converter = new Showdown.Converter()
 
 function About() {
   const { user_id, post_id } = useParams();
-  const [ note, setNoteState ] = useState({});
+  const [ note, setNoteState ] = useState({
+    title: "",
+    body: ""
+  });
 
   useEffect(() => {
     getOneNote(user_id, post_id, setNoteState);
@@ -22,7 +25,7 @@ function About() {
         <div className="font-semibold text-lg">
             { note.title }
         </div>
-        <div>
+        <div className="text-zinc-500">
           by { note.author }
         </div>
         <div className="text-lg is_markdown">

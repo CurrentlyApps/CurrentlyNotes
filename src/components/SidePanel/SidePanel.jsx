@@ -1,8 +1,7 @@
 import { DocumentPlusIcon, ArrowLeftOnRectangleIcon, HomeIcon } from '@heroicons/react/24/solid'
 import { useContext } from 'react';
-import { AppContext } from '../Home';
-import { signIn, signOutClick } from '../../services/firebase';
-import { newNoteClicked } from '../../services/firebase';
+import { AppContext } from 'contexts/AppContext';
+import { signIn, signOutClick, newNoteClicked } from 'services/firebase';
 import NoteListEntry from './NoteListEntry'
 
 export default function SidePanel(props) {
@@ -10,7 +9,7 @@ export default function SidePanel(props) {
     
     return (
         <div className={`bg-zinc-200 relative transition-all duration-200 h-full ${context.extended ? 'w-4/5 lg:w-1/5' : '-translate-x-96 w-0' }`}>
-            <div class="px-4 my-3 underline underline-offset-8 decoration-slate-800">
+            <div className="px-4 my-3 underline underline-offset-8 decoration-slate-800">
                 <div className="py-auto align-middle my-auto mr-1 tracking-widest uppercase lg:hidden block font-semibold">Currently</div>
             </div>
             { context.user
@@ -18,7 +17,7 @@ export default function SidePanel(props) {
                 <>
                     <div className='lg:hidden bg-zinc-100'>
                         <div className='px-4 py-4 flex flex-row '>
-                            <img class="w-12 h-12 rounded-full mr-2" src={context.user.photoURL} alt="Rounded avatar"/>
+                            <img className="w-12 h-12 rounded-full mr-2" src={context.user.photoURL} alt="Rounded avatar"/>
                             <div className='content-center font-semibold'>
                                 { context.user.displayName } <br/>
                                 <div className='font-light text-sm'>
@@ -58,7 +57,7 @@ function noteList(list, context) {
     let listElement = [];
     Object.values(list).forEach(note => {
         listElement.push(
-            <NoteListEntry note={note} />
+            <NoteListEntry key={note.id} note={note} />
         )
     });
     return listElement

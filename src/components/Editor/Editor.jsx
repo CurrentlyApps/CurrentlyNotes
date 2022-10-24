@@ -1,6 +1,6 @@
 import { useContext } from "react"
-import { updateNote } from "../../services/firebase"
-import { AppContext } from "../Home"
+import { updateNote } from "services/firebase"
+import { AppContext } from 'contexts/AppContext';
 import parse from 'html-react-parser';
 import Showdown from "showdown";
 

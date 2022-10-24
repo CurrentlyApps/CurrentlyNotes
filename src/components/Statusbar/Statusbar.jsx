@@ -1,6 +1,6 @@
 import { useContext } from "react"
-import { AppContext } from "../Home"
-import { signIn, signOutClick } from "../../services/firebase"
+import { AppContext } from 'contexts/AppContext';
+import { signIn, signOutClick } from "services/firebase"
 import { Dropdown } from "flowbite-react"
 import { Bars3Icon } from "@heroicons/react/24/solid"
 
@@ -41,34 +41,36 @@ export default function Statusbar() {
             </div>
 
             <div className="lg:flex hidden w-1/3 justify-end ">
-                { context.user ? <img class="w-9 h-9 rounded-full mr-1" src={context.user.photoURL} alt="Rounded avatar"/> : ''}
-                <Dropdown label={ context.user ? context.user.displayName : 'Not Logged In'} class="bg-transparent">
-                    <Dropdown.Header>
-                        { 
-                            context.user == null
-                            ? <div className="cursor-pointer text-md py-2" onClick={ () => {signIn(context)} }> Login</div>
-                            : <div className="dropDown">
-                                <div className="flex flex-row">
-                                    <div className="hidden lg:block">{ context.user.displayName }</div>
+                { context.user ? <img className="w-9 h-9 rounded-full mr-4" src={context.user.photoURL} alt="Rounded avatar"/> : ''}
+                <div className="my-auto p-0">
+                    <Dropdown label={ context.user ? context.user.displayName : 'Not Logged In'} inline={true}>
+                        <Dropdown.Header>
+                            { 
+                                context.user == null
+                                ? <div className="cursor-pointer text-md py-2" onClick={ () => {signIn(context)} }> Login</div>
+                                : <div className="dropDown">
+                                    <div className="flex flex-row">
+                                        <div className="hidden lg:block">{ context.user.displayName }</div>
+                                    </div>
+                                    <span className="block text-sm font-medium truncate">
+                                        { context.user.email }
+                                    </span>
                                 </div>
-                                <span className="block text-sm font-medium truncate">
-                                    { context.user.email }
-                                </span>
-                            </div>
-                        }
-                        
-                    </Dropdown.Header>
-                    <Dropdown.Item>
-                        <a href="https://www.currentlynotes.com/">Homepage</a>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                        Settings
-                    </Dropdown.Item>
-                    <Dropdown.Divider />
-                    <Dropdown.Item  onClick={ () => {signOutClick(context)} }>
-                        Sign out
-                    </Dropdown.Item>
-                </Dropdown>
+                            }
+                            
+                        </Dropdown.Header>
+                        <Dropdown.Item>
+                            <a href="https://www.currentlynotes.com/">Homepage</a>
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                            Settings
+                        </Dropdown.Item>
+                        <Dropdown.Divider />
+                        <Dropdown.Item  onClick={ () => {signOutClick(context)} }>
+                            Sign out
+                        </Dropdown.Item>
+                    </Dropdown>
+                </div>
             </div>
         </div>
     )
