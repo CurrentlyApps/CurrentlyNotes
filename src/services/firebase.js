@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
-import { set, getDatabase, ref } from "firebase/database";
+import { set, getDatabase, ref, get } from "firebase/database";
 import { getAnalytics, logEvent } from "firebase/analytics";
 
 const firebaseConfig = {
@@ -21,7 +21,6 @@ const auth = getAuth();
 const provider = new GoogleAuthProvider();
 const db = getDatabase(app);
 
-
 export const signOutClick = function(context) {    
     logEvent(analytics, 'signed_out');
     signOut(auth);
@@ -33,23 +32,19 @@ export const signIn = function(context) {
     logEvent(analytics, 'signed_in');
     signInWithPopup(auth, provider)
         .then((result) => {
-            // const credential = GoogleAuthProvider.credentialFromResult(result);
-            // const token = credential.accessToken;
             context.setUserState(result.user);
+            updateProfile();
         }).catch((error) => {
-            // const errorCode = error.code;
-            // const errorMessage = error.message;
-            // const email = error.customData.email;
-            // const credential = GoogleAuthProvider.credentialFromError(error);
+            console.log(error)
         }
     );
 }
 
 export const deleteNote = function(noteId, context) {
-    logEvent(analytics, 'note_deleted');
     const notesRef = ref(db, `/notes/users/${context.user.uid}/notes/${noteId}`);
     context.setCurrentNote(null);
     set(notesRef, null);
+    logEvent(analytics, 'note_deleted');
 }
 
 export const newNoteClicked = function(context) {
@@ -69,3 +64,20 @@ export const updateNote = function(note, context){
     const notesRef = ref(db, `notes/users/${context.user.uid}/notes/${note.id}`);
     set(notesRef, note)
   }
+
+export const getOneNote = function(userId, postId, setNoteState) {
+    const notesRef = ref(db, `notes/users/${userId}/notes/${postId}`)
+    get(notesRef).then( (snapshot ) => {
+        console.log(snapshot.val())
+        setNoteState(snapshot.val())
+    });
+}
+
+export const updateProfile = function() {
+    const user = getAuth().currentUser;
+    const userRef = ref(db, `notes/users/${user.uid}/profile`)
+    set(userRef, {
+        displayName: user.displayName,
+        email: user.email
+    });
+}

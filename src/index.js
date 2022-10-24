@@ -15,7 +15,7 @@ root.render(
   <Router>
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/about" element={<About />} />
+      <Route path="/storage/:user_id/:post_id" element={<About />} />
     </Routes>
   </Router>
 );
