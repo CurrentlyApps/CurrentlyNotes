@@ -6,6 +6,7 @@ import { Dropdown } from "flowbite-react"
 export default function Statusbar() {
     const context = useContext(AppContext)
     const setState = function(value, requiredState) {
+        context.setExtendedState(false)
         if (requiredState === context.editState) {
             context.setEditState(value)
         }

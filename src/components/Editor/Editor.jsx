@@ -22,7 +22,7 @@ export default function Editor(props) {
 
     if (context.currentNote === null) {
         return (
-            <div className="pt-10 grow lg:py-4 text-zinc-500 text-center"> 
+            <div className="pt-10 grow lg:py-4 text-zinc-500 text-center lg:w-4/5 w-1/5"> 
               {
                 context.user
                 ? 'Select a note on the left, or create a new one!'
@@ -34,11 +34,11 @@ export default function Editor(props) {
     }
     else {
         return (
-            <div className={`pt-5 flex lg:flex-row flex-col transition-all h-full ${context.extended ? 'w-4/5' : ''}`}>
+            <div className={`pt-5 flex lg:flex-row flex-col transition-all h-full overflow-hidden ${context.extended ? 'lg:w-4/5 w-1/5' : ''}`}>
                 {
                     context.editState === true &&
                     <>
-                        <div className="flex flex-col w-1/2 lg:pl-20 px-5 h-full">
+                        <div className="flex flex-col lg:w-1/2 w-full lg:pl-20 lg:px-5 pl-4 pr-1 lg:h-full h-1/2 resize-y">
                             <div className="font-light">
                                 Edit Markup
                                 <hr />
@@ -59,7 +59,7 @@ export default function Editor(props) {
                         </div>
                     </>
                 }
-                <div className={`transition-all px-14 h-full flex flex-col ${!context.editState ? 'w-full' : 'w-1/2'}`}>
+                <div className={`transition-all lg:px-14 pl-4   flex flex-col ${!context.editState ? 'w-full h-full' : 'lg:w-1/2 lg:h-full h-1/2'}`}>
                     <div className="font-light">
                         Preview
                         <hr />
