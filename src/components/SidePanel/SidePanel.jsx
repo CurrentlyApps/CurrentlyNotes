@@ -10,14 +10,13 @@ export default function SidePanel(props) {
     
     return (
         <div className={`bg-zinc-200 relative transition-all duration-200 h-full ${context.extended ? 'w-4/5 lg:w-1/5' : '-translate-x-96 w-0' }`}>
-            <div class="px-4 pt-4 underline underline-offset-8 decoration-slate-800">
+            <div class="px-4 my-3 underline underline-offset-8 decoration-slate-800">
                 <div className="py-auto align-middle my-auto mr-1 tracking-widest uppercase lg:hidden block font-semibold">Currently</div>
             </div>
             { context.user
                 ? 
                 <>
-                    
-                    <div className='lg:hidden'>
+                    <div className='lg:hidden bg-zinc-100'>
                         <div className='px-4 py-4 flex flex-row '>
                             <img class="w-12 h-12 rounded-full mr-2" src={context.user.photoURL} alt="Rounded avatar"/>
                             <div className='content-center font-semibold'>
