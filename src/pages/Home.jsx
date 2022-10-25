@@ -11,7 +11,8 @@ function Home() {
   const [noteList, setNoteState] = useState({});
   const [user, setUserState] = useState(null);
   const [editState, setEditState] = useState(false);
-  const [extended, setExtendedState] = useState(true)
+  const [extended, setExtendedState] = useState(true);
+  const [modalShareActive, setModalShareActive] = useState(false);
   
   const context = {
       user: user,
@@ -19,6 +20,8 @@ function Home() {
       currentNote: currentNote,
       editState: editState,
       extended: extended,
+      modalShareActive: modalShareActive,
+      setModalShareActive: setModalShareActive,
       setExtendedState: setExtendedState,
       setEditState: setEditState,
       setUserState: setUserState,
