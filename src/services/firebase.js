@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
-import { set, getDatabase, ref, get, onValue } from "firebase/database";
+import { set, getDatabase, ref, get } from "firebase/database";
 import { getAnalytics, logEvent } from "firebase/analytics";
 
 const firebaseConfig = {
@@ -19,7 +19,7 @@ export const analytics = getAnalytics(app);
 
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
-const db = getDatabase(app);
+export const db = getDatabase(app);
 
 export const signOutClick = function(context) {    
     logEvent(analytics, 'signed_out');
@@ -67,7 +67,7 @@ export const updateNote = function(note, context){
 
 export const getOneNote = function(userId, postId, setNoteState) {
     const notesRef = ref(db, `notes/users/${userId}/notes/${postId}`)
-    const userRef = ref(db, `notes/users/${userId}/profile`)
+    // const userRef = ref(db, `notes/users/${userId}/profile`)
     get(notesRef).then( (snapshot ) => {
         console.log(snapshot.val())
         setNoteState(snapshot.val())
@@ -80,24 +80,5 @@ export const updateProfile = function() {
     set(userRef, {
         displayName: user.displayName,
         email: user.email
-    });
-}
-
-export const onAuthStateChanged = function(context) {
-    getAuth().onAuthStateChanged(function(user) {
-        if( user ) {
-            context.setUserState(user);
-            const notesRef = ref(db, `/notes/users/${user.uid}/notes`);
-            onValue(notesRef, (snapshot) => {
-                const data = snapshot.val();
-                if( !data ){
-                    context.setNoteState([])
-                } else {
-                    context.setNoteState(data);
-                }
-            });
-        } else {
-            context.setUserState(null);
-        }
     });
 }

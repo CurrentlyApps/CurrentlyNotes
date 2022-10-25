@@ -1,9 +1,11 @@
 import SidePanel from "components/SidePanel/SidePanel";
 import Editor from "components/Editor/Editor";
 import Statusbar from "components/Statusbar/Statusbar";
-import React, { useState, useEffect, createContext } from 'react';
-import { onAuthStateChanged } from "services/firebase";
+import React, { useState, useEffect } from 'react';
+import { db } from "services/firebase";
 import { AppContext } from "contexts/AppContext";
+import { onValue, ref } from "firebase/database";
+import { getAuth } from "firebase/auth";
 
 
 function Home() {
@@ -30,7 +32,22 @@ function Home() {
   }
 
   useEffect(() => {
-    onAuthStateChanged(context);
+    getAuth().onAuthStateChanged(function(user) {
+      if( user ) {
+        setUserState(user);
+        const notesRef = ref(db, `/notes/users/${user.uid}/notes`);
+        onValue(notesRef, (snapshot) => {
+            const data = snapshot.val();
+            if( !data ){
+                setNoteState([])
+            } else {
+                setNoteState(data);
+            }
+        });
+      } else {
+        setUserState(null);
+      }
+    });
   }, []);
 
   return (
