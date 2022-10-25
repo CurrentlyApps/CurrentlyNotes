@@ -23,7 +23,7 @@ export default function About() {
   
   return (
     
-    <div className="w-full h-screen mx-auto py-5 lg:px-48 scrollbar_thin overflow-y-scroll">
+    <div className="w-full h-screen mx-auto py-5 lg:px-72 scrollbar_thin overflow-y-scroll">
         <div className="font-semibold text-lg">
             { note.title }
         </div>

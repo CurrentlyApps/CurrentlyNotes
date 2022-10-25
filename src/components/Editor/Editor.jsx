@@ -52,7 +52,7 @@ export default function Editor(props) {
                 {
                     context.editState === true &&
                     <>
-                        <div className="flex flex-col lg:w-1/2 w-full lg:pl-20 lg:px-5 pl-4 pr-1 lg:h-full h-1/2 resize-y">
+                        <div className="flex flex-col lg:w-1/2 w-full lg:pl-10 lg:px-5 pl-4 pr-1 lg:h-full h-1/2 resize-y">
                             <div className="font-light px-3">
                                 Edit Markup
                                 <hr />
@@ -74,17 +74,17 @@ export default function Editor(props) {
                         </div>
                     </>
                 }
-                <div className={`transition-all lg:px-14 pl-4   flex flex-col ${!context.editState ? 'w-full h-full' : 'lg:w-1/2 lg:h-full h-1/2'}`}>
-                    <div className="font-light">
+                <div className={`transition-all flex flex-col ${!context.editState ? 'w-full h-full' : 'lg:w-1/2 lg:h-full h-1/2'}`}>
+                    <div className={`font-light ${!context.editState ? 'w-full px-64' : 'p'}`}>
                         Preview
                         <hr />
                     </div>
             
-                    <div className={`h-full overflow-y-auto scrollbar_thin ${!context.editState ? 'w-full' : ''}`}>
+                    <div className={`h-full overflow-y-auto scrollbar_thin ${!context.editState ? 'w-full px-64' : 'pr-12'}`}>
                         <div className="font-semibold text-lg">
                             { props.note.title }
                         </div>
-                        <div className="is_markdown ">
+                        <div className={`is_markdown`} >
                         {
                             parse(converter.makeHtml(props.note.body))
                         }
