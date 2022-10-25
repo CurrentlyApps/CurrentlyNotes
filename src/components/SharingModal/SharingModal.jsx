@@ -22,12 +22,10 @@ export default function SharingModal() {
     values.forEach((val) => {
         radioButtonGroup1.push(
             <div key={val} className="flex items-center gap-2">
-                <Radio id={val} name="privacy" value={val} defaultChecked={ notePrivacy === val ? true :false } />
-                <Label htmlFor={val}>
-                    <div className="capitalize">
-                        {val}
-                    </div> 
-                </Label>
+                <Radio type="radio"  id={val} name="privacy" value={val} defaultChecked={ notePrivacy === val ? true :false } />
+                <div className="capitalize">
+                    { val }
+                </div>
             </div>
         )
     });
@@ -54,7 +52,7 @@ export default function SharingModal() {
         <div>
             <Modal show={note != null} onClose={onClose}>
                 <Modal.Header>
-                    Sharing Features
+                    Sharing Options
                 </Modal.Header>
                 <Modal.Body>
                     <div className="flex justify-between" onChange={onPrivacyChange}>
