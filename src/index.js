@@ -6,7 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import {
   Home,
-  PublishedPage
+  PublishedPage,
+  PublishedPageError
 } from "pages";
 
 
@@ -16,7 +17,8 @@ root.render(
   <Router>
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/storage/:user_id/:post_id" element={<PublishedPage />} />
+      <Route path="/page/:user_id/:post_id" element={<PublishedPage />} />
+      <Route path="/page/error" element={<PublishedPageError />} />
     </Routes>
   </Router>
 );
