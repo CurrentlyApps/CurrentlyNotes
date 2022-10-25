@@ -21,12 +21,12 @@ function About() {
   
   return (
     
-    <div className="container w-full h-full mx-auto px-5 lg:px-20 overflow-y-auto">
+    <div className="w-full h-screen mx-auto py-5 lg:px-48 scrollbar_thin overflow-y-scroll">
         <div className="font-semibold text-lg">
             { note.title }
         </div>
         <div className="text-zinc-500">
-          by { note.author }
+          
         </div>
         <div className="text-lg is_markdown">
         {
