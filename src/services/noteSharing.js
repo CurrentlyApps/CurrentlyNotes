@@ -22,3 +22,11 @@ export const getOneNote = function(userId, postId, setNoteState, errorCallback) 
         errorCallback()
     });
 }
+
+export function getShareableLink(context, note) {
+    return `${window.location.href}page/${context.user.uid}/${note.id}`;
+}
+
+export function copyShareableLink(context, note) {
+    navigator.clipboard.writeText(getShareableLink(context, note))
+}

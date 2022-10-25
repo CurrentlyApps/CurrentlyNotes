@@ -1,7 +1,7 @@
 import { AppContext } from "contexts/AppContext";
 import { Button, Label, Modal, Radio, TextInput } from "flowbite-react";
 import { useContext, useState } from "react";
-import { setNotePrivacy } from "services/noteSharing";
+import { setNotePrivacy, getShareableLink } from "services/noteSharing";
 
 export default function SharingModal() {
     const context = useContext(AppContext);
@@ -12,7 +12,7 @@ export default function SharingModal() {
     }
     const note = context.noteList[context.modalShareNote]
     const notePrivacy = note.privacy;
-    const shareableLink = `${window.location.href}page/${context.user.uid}/${note.id}`;
+    const shareableLink = getShareableLink(context, note);
     
     const values = ["private", "public", "collaborate"];
     const radioButtonGroup1 = []
