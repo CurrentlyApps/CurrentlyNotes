@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getOneNote } from "../services/firebase";
+import { useNavigate, useParams } from "react-router-dom";
+import { getOneNote } from "services/noteSharing";
 import parse from 'html-react-parser';
 import Showdown from "showdown";
 
+
 const converter = new Showdown.Converter()
 
-function About() {
+export default function About() {
+  const navigate = useNavigate();
   const { user_id, post_id } = useParams();
   const [ note, setNoteState ] = useState({
     title: "",
     body: ""
   });
-
+  
   useEffect(() => {
-    getOneNote(user_id, post_id, setNoteState);
-  }, [user_id, post_id])
+    getOneNote(user_id, post_id, setNoteState, ()=>navigate("/page/error"));
+  }, [user_id, post_id, navigate])
   
   
   
@@ -37,4 +39,4 @@ function About() {
   );
 }
 
-export default About;
+

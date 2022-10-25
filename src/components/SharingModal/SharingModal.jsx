@@ -1,58 +1,85 @@
 import { AppContext } from "contexts/AppContext";
-import { Button, Label, Modal, Radio } from "flowbite-react";
-import { useContext } from "react";
+import { Button, Label, Modal, Radio, TextInput } from "flowbite-react";
+import { useContext, useState } from "react";
+import { setNotePrivacy } from "services/noteSharing";
 
 export default function SharingModal() {
-    const context = useContext(AppContext)
+    const context = useContext(AppContext);
+    const [copyConfirmHidden, setCopyConfirmHidden] = useState(true);
+
+    if (context.modalShareNote === null) {
+        return 
+    }
+    const note = context.noteList[context.modalShareNote]
+    const notePrivacy = note.privacy;
+    const shareableLink = `${window.location.href}page/${context.user.uid}/${note.id}`;
+    
+    const values = ["private", "public", "collaborate"];
+    const radioButtonGroup1 = []
+    if (!notePrivacy) {
+        setNotePrivacy(context, note, 'Private')
+    }
+    values.forEach((val) => {
+        radioButtonGroup1.push(
+            <div key={val} className="flex items-center gap-2">
+                <Radio id={val} name="privacy" value={val} defaultChecked={ notePrivacy === val ? true :false } />
+                <Label htmlFor={val}>
+                    <div className="capitalize">
+                        {val}
+                    </div> 
+                </Label>
+            </div>
+        )
+    });
+
+    const onPrivacyChange = function(event) {
+        setNotePrivacy(context, note, event.target.value)
+    }
+
+    const onClose = function() {
+        context.setModalShareNote(null)
+    }
+
+    function copyShareLinkToClipboard() {
+        navigator.clipboard.writeText(shareableLink)
+        setCopyConfirmHidden(false);
+        setTimeout(() => {
+            setCopyConfirmHidden(true);
+        }, 5000)
+    } 
+
+    
 
     return (
         <div>
-            <Modal show={context.modalShareActive}>
+            <Modal show={note != null} onClose={onClose}>
                 <Modal.Header>
                     Sharing Features
                 </Modal.Header>
                 <Modal.Body>
-                    <div className="flex justify-between">
-                        <div className="flex items-center gap-2">
-                            <Radio
-                            id="public"
-                            name="privacy"
-                            value="public"
-                            />
-                            <Label htmlFor="public">
-                                Public
-                            </Label>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                            <Radio
-                            id="Private"
-                            name="privacy"
-                            value="Private"
-                            />
-                            <Label htmlFor="Private">
-                                Private
-                            </Label>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                            <Radio
-                            id="Collaborate"
-                            name="privacy"
-                            value="Collaborate"
-                            />
-                            <Label htmlFor="Collaborate">
-                                Collaborate
-                            </Label>
-                        </div>
+                    <div className="flex justify-between" onChange={onPrivacyChange}>
+                        { radioButtonGroup1 }
                     </div>
+
+                    {
+                        note.privacy === "public" &&
+                        <div className="my-5">
+                            <div className="flex flex-row">
+                                <Label htmlFor="shareLink">
+                                    Share Link
+                                </Label>
+                                <div className="transition-all ml-auto text-sm text-green-500" hidden={copyConfirmHidden}>
+                                    Link copied to clipboard
+                                </div>
+                            </div>
+                            <TextInput onClick={copyShareLinkToClipboard} value={shareableLink} readOnly={true} id="shareLink" />
+                        </div>
+                    }
+
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button >
-                        I accept
-                    </Button>
-                    <Button color="gray">
-                        Decline
+                    <Button onClick={onClose}>
+                        Close
                     </Button>
                 </Modal.Footer>   
 
