@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
-import { set, getDatabase, ref, get } from "firebase/database";
+import { set, getDatabase, ref } from "firebase/database";
 import { getAnalytics, logEvent } from "firebase/analytics";
 
 const firebaseConfig = {
@@ -55,7 +55,8 @@ export const newNoteClicked = function(context) {
     tempState[newId] = {
       id: newId,
       title: "New Note",
-      body: ""
+      body: "",
+      privacy: "private"
     }
     set(notesRef, tempState).then( () => context.setCurrentNote(newId))
 }
@@ -64,15 +65,6 @@ export const updateNote = function(note, context){
     const notesRef = ref(db, `notes/users/${context.user.uid}/notes/${note.id}`);
     set(notesRef, note)
   }
-
-export const getOneNote = function(userId, postId, setNoteState) {
-    const notesRef = ref(db, `notes/users/${userId}/notes/${postId}`)
-    // const userRef = ref(db, `notes/users/${userId}/profile`)
-    get(notesRef).then( (snapshot ) => {
-        console.log(snapshot.val())
-        setNoteState(snapshot.val())
-    });
-}
 
 export const updateProfile = function() {
     const user = getAuth().currentUser;
