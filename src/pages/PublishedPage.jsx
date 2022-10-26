@@ -23,17 +23,19 @@ export default function About() {
   
   return (
     
-    <div className="w-full h-screen mx-auto py-5 lg:px-72 scrollbar_thin overflow-y-scroll">
-        <div className="font-semibold text-lg">
-            { note.title }
-        </div>
-        <div className="text-zinc-500">
-          
-        </div>
-        <div className="text-lg is_markdown">
-        {
-            parse(converter.makeHtml(note.body))
-        }
+    <div className="w-screen h-screen lg:px-72 scrollbar_thin overflow-y-scroll bg-zinc-100">
+        <div className=" shadow-lg pt-5">
+          <div className="font-semibold text-md lg:text-xl lg:px-32">
+              { note.title }
+          </div>
+          <div className="text-zinc-500 lg:px-32">
+            
+          </div>
+          <div className="is_markdown text-sm md:text-md lg:px-32">
+          {
+              parse(converter.makeHtml(note.body))
+          }
+          </div>
         </div>
     </div>
   );
