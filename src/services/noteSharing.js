@@ -24,7 +24,7 @@ export const getOneNote = function(userId, postId, setNoteState, errorCallback) 
 }
 
 export function getShareableLink(context, note) {
-    return `${window.location.href}page/${context.user.uid}/${note.id}`;
+    return `${window.location.host}/page/${context.user.uid}/${note.id}`;
 }
 
 export function copyShareableLink(context, note) {
