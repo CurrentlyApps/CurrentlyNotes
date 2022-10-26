@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
-import { set, getDatabase, ref } from "firebase/database";
+import { set, getDatabase, ref, push } from "firebase/database";
 import { getAnalytics, logEvent } from "firebase/analytics";
 
 const firebaseConfig = {
@@ -50,15 +50,15 @@ export const deleteNote = function(noteId, context) {
 export const newNoteClicked = function(context) {
     logEvent(analytics, 'note_added');
     const notesRef = ref(db, `notes/users/${context.user.uid}/notes`);
-    let newId = Object.keys(context.noteList).length + 1;
-    let tempState = { ...context.noteList }
-    tempState[newId] = {
-      id: newId,
-      title: "New Note",
-      body: "",
-      privacy: "private"
-    }
-    set(notesRef, tempState).then( () => context.setCurrentNote(newId))
+    const newNoteRef = push(notesRef);
+    set(newNoteRef, {
+        id: newNoteRef.key,
+        title: "New Note",
+        body: "",
+        privacy: "private"
+    }).then(
+        () => context.setCurrentNote(newNoteRef.key)
+    )
 }
 
 export const updateNote = function(note, context){
