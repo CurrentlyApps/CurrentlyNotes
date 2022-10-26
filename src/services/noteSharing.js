@@ -7,21 +7,6 @@ export const setNotePrivacy = function(context, note, privacy) {
     set(notePrivacyRef, privacy)
 }
 
-export const getOneNote = function(userId, postId, setNoteState, errorCallback) {
-    const notesRef = ref(db, `notes/users/${userId}/notes/${postId}`)
-    // const userRef = ref(db, `notes/users/${userId}/profile`)
-    get(notesRef).then( (snapshot ) => {
-        const note = snapshot.val()
-        if(note.privacy === "private") {
-            errorCallback()
-        } else {
-            setNoteState(note)
-        }
-        
-    }).catch( (err) => {
-        errorCallback()
-    });
-}
 
 export function getShareableLink(context, note) {
     return `${window.location.host}/page/${context.user.uid}/${note.id}`;
