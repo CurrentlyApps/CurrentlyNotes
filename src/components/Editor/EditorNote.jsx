@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { db, updateNote } from "services/firebase"
 import { AppContext } from 'contexts/AppContext';
 import parse from 'html-react-parser';
@@ -11,8 +11,6 @@ export default function EditorNote() {
     const converter = new Showdown.Converter()
     const context = useContext(AppContext)
     const { user_id, post_id } = useParams();
-
-    const note = context.noteList[post_id];
 
     const updateTitle = function(event){
         let tempNote = { ...note, title: event.target.value }
@@ -37,15 +35,19 @@ export default function EditorNote() {
         }
     }
 
+    const [loadingNote, setLoadingNote] = useState(true);
+    const [note, setNote] = useState({"title": "", "body": ""})
+
     useEffect( () => {
         const notesRef = ref(db, `/notes/users/${user_id}/notes/${post_id}`);
         onValue(notesRef, (snapshot) => {
             const data = snapshot.val();
-            console.log(data)
+            setLoadingNote(false);
+            setNote(data);
         });
-    }); 
+    }, [post_id, user_id]); 
 
-    if ( context.loadingNotes ) {
+    if ( loadingNote ) {
         return (
             <div className={`mx-auto pt-28`}>
                 <Spinner aria-label="Loading Note" size="xl" />
@@ -64,7 +66,7 @@ export default function EditorNote() {
                             <hr />
                         </div>
                         <input 
-                        className="w-full text-lg border-none outline-none px-3 focus:ring-0 text-xl"
+                        className="w-full border-none outline-none px-3 focus:ring-0 text-xl"
                         value={ note.title }
                         onChange={ updateTitle }
                         placeholder="Title"
