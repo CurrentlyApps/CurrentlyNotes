@@ -51,7 +51,7 @@ export default function EditorNote() {
         }, () => {
             navigate("/edit/error");
         });
-    }, [post_id, user_id]); 
+    }, [post_id, user_id, navigate]); 
 
     if ( loadingNote ) {
         return (

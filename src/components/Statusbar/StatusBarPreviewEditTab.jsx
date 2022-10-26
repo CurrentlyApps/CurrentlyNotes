@@ -5,7 +5,7 @@ export default function StatusBarPreviewEditTab() {
     const context = useContext(AppContext)
 
     if (context.currentNote == null) {
-        return
+        //return
     }
 
     const setState = function(value, requiredState) {
