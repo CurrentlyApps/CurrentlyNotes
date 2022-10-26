@@ -30,11 +30,11 @@ export default function NoteListEntry(props) {
                         </div>
                         <ShareIcon className='w-4 ml-2 cursor-pointer hover:text-zinc-700'/>
                     </Dropdown.Item>
-                    <Dropdown.Item>
+                    <Dropdown.Item onClick={ () => deleteNote(note.id, context) }>
                         <div className='mr-auto'>
                             Delete 
                         </div>
-                        <TrashIcon className='w-4 ml-2 cursor-pointer hover:text-zinc-700' onClick={ () => deleteNote(note.id, context) }></TrashIcon>
+                        <TrashIcon className='w-4 ml-2 cursor-pointer hover:text-zinc-700' ></TrashIcon>
                     </Dropdown.Item>
                 </Dropdown>
             </div>

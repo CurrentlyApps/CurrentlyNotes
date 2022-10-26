@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
-import { set, getDatabase, ref, push } from "firebase/database";
+import { set, getDatabase, ref, push, remove } from "firebase/database";
 import { getAnalytics, logEvent } from "firebase/analytics";
 
 const firebaseConfig = {
@@ -43,7 +43,7 @@ export const signIn = function(context) {
 export const deleteNote = function(noteId, context) {
     const notesRef = ref(db, `/notes/users/${context.user.uid}/notes/${noteId}`);
     context.setCurrentNote(null);
-    set(notesRef, null);
+    remove(notesRef)
     logEvent(analytics, 'note_deleted');
 }
 
