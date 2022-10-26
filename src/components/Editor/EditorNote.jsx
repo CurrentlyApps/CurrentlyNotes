@@ -64,7 +64,7 @@ export default function EditorNote() {
                             <hr />
                         </div>
                         <input 
-                        className="w-full text-lg border-none outline-none focus:ring-0 text-xl"
+                        className="w-full text-lg border-none outline-none px-3 focus:ring-0 text-xl"
                         value={ note.title }
                         onChange={ updateTitle }
                         placeholder="Title"
