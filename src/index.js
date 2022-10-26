@@ -22,6 +22,7 @@ root.render(
       <Route path="/" element={<Home />} >
         <Route path="" element={<Editor />} >
           <Route path="" element={<EditorNoNoteSelected/>} />
+          <Route path="edit/error" element={<PublishedPageError/>} />
           <Route path="edit/:user_id/:post_id" element={<EditorNote />} />
         </Route>
       </Route>

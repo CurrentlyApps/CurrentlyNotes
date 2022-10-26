@@ -3,11 +3,12 @@ import { db, updateNote } from "services/firebase"
 import { AppContext } from 'contexts/AppContext';
 import parse from 'html-react-parser';
 import Showdown from "showdown";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Spinner } from "flowbite-react";
 import { onValue, ref } from "firebase/database";
 
 export default function EditorNote() {
+    var navigate = useNavigate();
     const converter = new Showdown.Converter()
     const context = useContext(AppContext)
     const { user_id, post_id } = useParams();
@@ -42,8 +43,13 @@ export default function EditorNote() {
         const notesRef = ref(db, `/notes/users/${user_id}/notes/${post_id}`);
         onValue(notesRef, (snapshot) => {
             const data = snapshot.val();
+            if (!data) {
+                navigate("/edit/error");
+            }
             setLoadingNote(false);
             setNote(data);
+        }, () => {
+            navigate("/edit/error");
         });
     }, [post_id, user_id]); 
 
