@@ -1,11 +1,11 @@
 import SidePanel from "components/SidePanel/SidePanel";
-import Editor from "components/Editor/Editor";
 import Statusbar from "components/Statusbar/Statusbar";
 import React, { useState, useEffect } from 'react';
 import { db } from "services/firebase";
 import { AppContext } from "contexts/AppContext";
 import { onValue, ref } from "firebase/database";
 import { getAuth } from "firebase/auth";
+import { Outlet } from "react-router-dom";
 
 
 function Home() {
@@ -15,6 +15,7 @@ function Home() {
   const [editState, setEditState] = useState(false);
   const [extended, setExtendedState] = useState(true);
   const [modalShareNote, setModalShareNote] = useState(null);
+  const [loadingNotes, setLoadingNotes] = useState(true);
   
   const context = {
       user: user,
@@ -23,6 +24,8 @@ function Home() {
       editState: editState,
       extended: extended,
       modalShareNote: modalShareNote,
+      loadingNotes: loadingNotes,
+      setLoadingNotes: setLoadingNotes,
       setModalShareNote: setModalShareNote,
       setExtendedState: setExtendedState,
       setEditState: setEditState,
@@ -43,6 +46,7 @@ function Home() {
             } else {
                 setNoteState(data);
             }
+            setLoadingNotes(false)
         });
       } else {
         setUserState(null);
@@ -56,7 +60,7 @@ function Home() {
         <Statusbar/>
         <div className="flex flex-row h-screen overflow-auto">
           <SidePanel />
-          <Editor note={ noteList[currentNote] } />
+          <Outlet />
         </div>
       </div>
     </AppContext.Provider>

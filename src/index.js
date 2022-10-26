@@ -9,6 +9,9 @@ import {
   PublishedPage,
   PublishedPageError
 } from "pages";
+import Editor from 'components/Editor/Editor';
+import EditorNoNoteSelected from 'components/Editor/EditorNoNoteSelected';
+import EditorNote from 'components/Editor/EditorNote';
 
 
 
@@ -16,7 +19,13 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Router>
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Home />} >
+        <Route path="" element={<Editor />} >
+          <Route path="" element={<EditorNoNoteSelected/>} />
+          <Route path="edit/:user_id/:post_id" element={<EditorNote />} />
+        </Route>
+      </Route>
+      
       <Route path="/page/:user_id/:post_id" element={<PublishedPage />} />
       <Route path="/page/error" element={<PublishedPageError />} />
     </Routes>
