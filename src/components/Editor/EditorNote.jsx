@@ -62,17 +62,17 @@ export default function EditorNote() {
     }
 
     return (
-        <div className={`pt-5 flex lg:flex-row flex-col transition-all h-full overflow-hidden ${context.extended ? 'lg:w-4/5 w-1/5' : 'w-full'}`}>
+        <div className={`flex lg:flex-row flex-col transition-all h-full overflow-hidden ${context.extended ? 'lg:w-full w-1/5' : 'w-full'}`}>
             {
                 context.editState === true &&
                 <>
-                    <div className="flex flex-col lg:w-1/2 w-full lg:pl-10 lg:px-5 pl-4 pr-1 lg:h-full h-1/2 resize-y">
-                        <div className="font-light px-3">
+                    <div className="flex flex-col lg:w-1/2 w-full px-2 lg:h-full h-1/2 resize-y">
+                        <div className="font-light">
                             Edit Markup
                             <hr />
                         </div>
                         <input 
-                        className="w-full border-none outline-none px-3 focus:ring-0 text-xl"
+                        className="w-full border-none outline-none focus:ring-0 text-xl"
                         value={ note.title }
                         onChange={ updateTitle }
                         placeholder="Title"
@@ -89,12 +89,12 @@ export default function EditorNote() {
                 </>
             }
             <div className={`transition-all flex flex-col ${!context.editState ? 'w-full h-full' : 'lg:w-1/2 lg:h-full h-1/2'}`}>
-                <div className={`font-light ${!context.editState ? 'w-full px-64' : 'p'}`}>
+                <div className={`font-light  ${!context.editState ? 'w-full lg:px-64 px-2' : 'px-2'}`}>
                     Preview
                     <hr />
                 </div>
         
-                <div className={`h-full overflow-y-auto scrollbar_thin ${!context.editState ? 'w-full px-64' : 'pr-12'}`}>
+                <div className={`h-full overflow-y-auto scrollbar_thin  ${!context.editState ? 'w-full lg:px-64 px-2' : 'px-2'}`}>
                     <div className="text-xl">
                         { note.title }
                     </div>
