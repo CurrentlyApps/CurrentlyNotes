@@ -16,12 +16,12 @@ export default function EditorNote() {
 
     const updateTitle = function(event){
         let tempNote = { ...note, title: event.target.value }
-        updateNote(tempNote, context)
+        updateNote(tempNote, user_id)
     }
 
     const updateBody = function(event) {
         let tempNote = { ...note, body: event.target.value }
-        updateNote(tempNote, context)
+        updateNote(tempNote, user_id)
     }
 
     const handleTab = e => {

@@ -61,8 +61,8 @@ export const newNoteClicked = function(context) {
     )
 }
 
-export const updateNote = function(note, context){
-    const notesRef = ref(db, `notes/users/${context.user.uid}/notes/${note.id}`);
+export const updateNote = function(note, user_id){
+    const notesRef = ref(db, `notes/users/${user_id}/notes/${note.id}`);
     set(notesRef, note)
   }
 
