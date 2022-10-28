@@ -3,4 +3,4 @@ Take your data anywhere! Login with google, it saves your notes in Firebase Real
 
 Hosted on Digital Ocean Droplets
 
-Try it out here: https://current.rewelcabiles.me/
+Try it out here: http://app.currentlynotes.com/
