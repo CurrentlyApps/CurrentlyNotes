@@ -5,7 +5,7 @@ import parse from 'html-react-parser';
 import Showdown from "showdown";
 import { useNavigate, useParams } from "react-router-dom";
 import { Spinner } from "flowbite-react";
-import { onValue, ref } from "firebase/database";
+import { off, onValue, ref } from "firebase/database";
 
 export default function EditorNote() {
     var navigate = useNavigate();
@@ -51,6 +51,9 @@ export default function EditorNote() {
         }, () => {
             navigate("/edit/error");
         });
+        return () => {
+            off(notesRef)
+        }
     }, [post_id, user_id, navigate]); 
 
     if ( loadingNote ) {
@@ -66,13 +69,13 @@ export default function EditorNote() {
             {
                 context.editState === true &&
                 <>
-                    <div className="flex flex-col lg:w-1/2 w-full px-2 lg:h-full h-1/2 resize-y">
-                        <div className="font-light">
+                    <div className="flex flex-col lg:w-1/2 w-full px-4 lg:h-full h-1/2 resize-y">
+                        <div className="font-light px-4">
                             Edit Markup
                             <hr />
                         </div>
                         <input 
-                        className="w-full border-none outline-none focus:ring-0 text-xl"
+                        className="w-full border-none outline-none focus:ring-0 text-xl px-4"
                         value={ note.title }
                         onChange={ updateTitle }
                         placeholder="Title"
@@ -80,7 +83,7 @@ export default function EditorNote() {
                         
                         <textarea
                         onKeyDown={ handleTab }
-                        className="h-full border-none outline-none focus:ring-0 overflow-auto scrollbar_thin resize-none"
+                        className="h-full border-none outline-none focus:ring-0 "
                         value={ note.body }
                         onChange={ updateBody }
                         placeholder="Insert Text Here"
