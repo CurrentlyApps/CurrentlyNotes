@@ -9,7 +9,7 @@ export default function StatusBarPreviewEditTab() {
     }
 
     const setState = function(value, requiredState) {
-        context.setExtendedState(false)
+        
         if (requiredState === context.editState) {
             context.setEditState(value)
         }
