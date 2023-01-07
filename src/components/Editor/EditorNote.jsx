@@ -48,6 +48,11 @@ export default function EditorNote() {
             }
             setLoadingNote(false);
             setNote(data);
+            if( data ) {
+                document.title = data.title + " - Currently Notes";
+            } else {
+                document.title = "Currently Notes";
+            }
         }, () => {
             navigate("/edit/error");
         });
