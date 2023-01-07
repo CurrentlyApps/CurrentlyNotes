@@ -5,10 +5,12 @@ import { db } from "services/firebase";
 import { AppContext } from "contexts/AppContext";
 import { onValue, ref } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import { Outlet } from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
 
 
 function Home() {
+  let navigate = useNavigate();
+
   const [currentNote, setCurrentNote] = useState(null);
   const [noteList, setNoteState] = useState({});
   const [user, setUserState] = useState(null);
@@ -53,6 +55,14 @@ function Home() {
       }
     });
   }, []);
+
+  useEffect(() => {
+    if ( user == null ) {
+      navigate("/");
+    }
+  }, [navigate, user]);
+
+
 
   return (
     <AppContext.Provider value={context}>
