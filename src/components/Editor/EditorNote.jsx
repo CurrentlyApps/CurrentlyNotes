@@ -8,10 +8,12 @@ import { Spinner } from "flowbite-react";
 import { off, onValue, ref } from "firebase/database";
 
 export default function EditorNote() {
-    var navigate = useNavigate();
+    let navigate = useNavigate();
     const converter = new Showdown.Converter()
     const context = useContext(AppContext)
     const { user_id, post_id } = useParams();
+
+    const [showPreview, setShowPreview] = useState(true)
 
     const updateTitle = function(event){
         let tempNote = { ...note, title: event.target.value }
@@ -71,48 +73,58 @@ export default function EditorNote() {
 
     return (
         <div className={`flex lg:flex-row flex-col transition-all h-full overflow-hidden ${context.extended ? 'lg:w-full w-1/5' : 'w-full'}`}>
-            {
-                context.editState === true &&
-                <>
-                    <div className="flex flex-col lg:w-1/2 w-full px-4 lg:h-full h-1/2 resize-y">
-                        <div className="font-light px-4">
+            <div className="flex flex-col lg:w-1/2 w-full px-4 lg:h-full h-1/2 resize-y">
+                <div className="font-light px-4">
+                    <div className={"flex flex-row"}>
+                        <div>
                             Edit Markup
-                            <hr />
                         </div>
-                        <input 
-                        className="w-full border-none outline-none focus:ring-0 text-xl px-4"
-                        value={ note.title }
-                        onChange={ updateTitle }
-                        placeholder="Title"
-                        />
-                        
-                        <textarea
-                        onKeyDown={ handleTab }
-                        className="h-full border-none outline-none focus:ring-0 overflow-auto px-4 scrollbar_thin"
-                        value={ note.body }
-                        onChange={ updateBody }
-                        placeholder="Insert Text Here"
-                        />
+                        <div className="ml-auto">
+                            <button onClick={() => setShowPreview((prevState) => {return !prevState })} className="text-zinc-700 hover:text-zinc-600">
+                                Toggle Preview
+                            </button>
+                        </div>
                     </div>
-                </>
-            }
-            <div className={`transition-all flex flex-col ${!context.editState ? 'w-full h-full' : 'lg:w-1/2 lg:h-full h-1/2'}`}>
-                <div className={`font-light  ${!context.editState ? 'w-full lg:px-64 px-2' : 'px-2'}`}>
-                    Preview
                     <hr />
                 </div>
-        
-                <div className={`h-full overflow-y-auto scrollbar_thin  ${!context.editState ? 'w-full lg:px-64 px-2' : 'px-2'}`}>
-                    <div className="text-xl">
-                        { note.title }
-                    </div>
-                    <div className={`is_markdown`} >
-                    {
-                        parse(converter.makeHtml(note.body))
-                    }
-                    </div>
-                </div>
+                <input
+                    className="w-full border-none outline-none focus:ring-0 text-xl px-4"
+                    value={ note.title }
+                    onChange={ updateTitle }
+                    placeholder="Title"
+                />
+
+                <textarea
+                    onKeyDown={ handleTab }
+                    className="h-full border-none outline-none focus:ring-0 overflow-auto px-4 scrollbar_thin"
+                    value={ note.body }
+                    onChange={ updateBody }
+                    placeholder="Insert Text Here"
+                />
             </div>
+            {
+                showPreview === true
+                    ?
+                    <div className={`transition-all flex flex-col ${!context.editState ? 'w-full h-full' : 'lg:w-1/2 lg:h-full h-1/2'}`}>
+                        <div className={`font-light  ${!context.editState ? 'w-full lg:px-64 px-2' : 'px-2'}`}>
+                            Preview
+                            <hr />
+                        </div>
+
+                        <div className={`h-full overflow-y-auto scrollbar_thin  ${!context.editState ? 'w-full lg:px-64 px-2' : 'px-2'}`}>
+                            <div className="text-xl">
+                                { note.title }
+                            </div>
+                            <div className={`is_markdown`} >
+                                {
+                                    parse(converter.makeHtml(note.body))
+                                }
+                            </div>
+                        </div>
+                    </div>
+                : ""
+
+            }
         </div>
     )
 }
