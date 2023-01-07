@@ -1,7 +1,8 @@
 import { AppContext } from "contexts/AppContext";
 import { Dropdown } from "flowbite-react";
 import { useContext } from "react";
-import { signIn, signOutClick } from "services/firebase";
+import { signOutClick } from "services/firebase";
+import LoginOrProfile from "components/Auth/LoginOrProfile";
 
 export default function StatusBarDropDown() {  
     const context = useContext(AppContext)
