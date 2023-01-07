@@ -2,6 +2,7 @@ import { useContext } from "react"
 import { AppContext } from 'contexts/AppContext';
 import { Bars3Icon } from "@heroicons/react/24/solid"
 import StatusBarDropDown from "./StatusBarDropDown";
+import StatusBarNoteTitle from "./StatusBarNoteTitle";
 
 export default function Statusbar() {
     const context = useContext(AppContext)
@@ -14,7 +15,7 @@ export default function Statusbar() {
             </div>
 
             <div className="mx-auto flex justify-center w-1/3">
-
+              <StatusBarNoteTitle/>
             </div>
 
             <div className="lg:flex hidden w-1/3 justify-end ">
