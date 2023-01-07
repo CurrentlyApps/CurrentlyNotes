@@ -1,4 +1,3 @@
-import {signInWithGoogle} from "../../services/firebase";
 import {AppContext} from "contexts/AppContext";
 import {useContext, useEffect, useState} from "react";
 import SignInOptions from "./SignIn/SignInOptions";
