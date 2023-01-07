@@ -14,7 +14,7 @@ function Home() {
   const [currentNote, setCurrentNote] = useState(null);
   const [noteList, setNoteState] = useState({});
   const [user, setUserState] = useState(null);
-  const [editState, setEditState] = useState(false);
+  const [editState, setEditState] = useState(true);
   const [extended, setExtendedState] = useState(true);
   const [modalShareNote, setModalShareNote] = useState(null);
   const [loadingNotes, setLoadingNotes] = useState(true);
