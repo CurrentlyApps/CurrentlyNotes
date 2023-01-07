@@ -15,11 +15,6 @@ export default function EditorNote() {
 
     const [showPreview, setShowPreview] = useState(true)
 
-    const updateTitle = function(event){
-        let tempNote = { ...context.note, title: event.target.value }
-        updateNote(tempNote, user_id)
-    }
-
     const updateBody = function(event) {
         let tempNote = { ...context.note, body: event.target.value }
         updateNote(tempNote, user_id)
@@ -77,10 +72,7 @@ export default function EditorNote() {
             <div className="flex flex-col lg:w-1/2 w-full px-4 lg:h-full h-1/2 resize-y">
                 <div className="font-light px-4">
                     <div className={"flex flex-row"}>
-                        <div>
-                            Edit Markup
-                        </div>
-                        <div className="ml-auto">
+                        <div className="">
                             <button onClick={() => setShowPreview((prevState) => {return !prevState })} className="text-zinc-700 hover:text-zinc-600">
                                 Toggle Preview
                             </button>
@@ -88,12 +80,6 @@ export default function EditorNote() {
                     </div>
                     <hr />
                 </div>
-                <input
-                    className="w-full border-none outline-none focus:ring-0 text-xl px-4"
-                    value={ context.note.title }
-                    onChange={ updateTitle }
-                    placeholder="Title"
-                />
 
                 <textarea
                     onKeyDown={ handleTab }
