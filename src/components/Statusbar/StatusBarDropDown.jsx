@@ -28,12 +28,12 @@ export default function StatusBarDropDown() {
                                 Account Settings
                             </Dropdown.Item>
                             <Dropdown.Item>
-                                <Cog6ToothIcon class={"w-4 mr-2"} />
+                                <Cog6ToothIcon className={"w-4 mr-2"} />
                                 App Settings
                             </Dropdown.Item>
                             <Dropdown.Divider />
                             <Dropdown.Item  onClick={ () => {signOutClick(context)} }>
-                                <ArrowRightOnRectangleIcon class={"w-4 mr-2"}/>
+                                <ArrowRightOnRectangleIcon className={"w-4 mr-2"}/>
                                 Sign out
                             </Dropdown.Item>
                         </>
