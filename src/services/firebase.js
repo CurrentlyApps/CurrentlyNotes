@@ -55,7 +55,7 @@ export const newNoteClicked = function(context) {
     const newNoteRef = push(notesRef);
     set(newNoteRef, {
         id: newNoteRef.key,
-        title: "New Note",
+        title: "Untitled Note",
         body: "",
         privacy: "private"
     }).then(
