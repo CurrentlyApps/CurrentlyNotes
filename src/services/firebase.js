@@ -30,7 +30,7 @@ export const signOutClick = function(context) {
     });
 }
 
-export const signIn = function(context) {
+export const signInWithGoogle = function(context) {
     logEvent(analytics, 'signed_in');
     signInWithPopup(auth, provider)
         .then((result) => {

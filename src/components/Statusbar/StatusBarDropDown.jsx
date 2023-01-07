@@ -27,13 +27,20 @@ export default function StatusBarDropDown() {
                 <Dropdown.Item>
                     <a href="https://www.currentlynotes.com/">Homepage</a>
                 </Dropdown.Item>
-                <Dropdown.Item>
-                    Settings
-                </Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item  onClick={ () => {signOutClick(context)} }>
-                    Sign out
-                </Dropdown.Item>
+                {
+                    context.user == null
+                        ? ""
+                        :
+                        <>
+                            <Dropdown.Item>
+                                Settings
+                            </Dropdown.Item>
+                            <Dropdown.Divider />
+                            <Dropdown.Item  onClick={ () => {signOutClick(context)} }>
+                                Sign out
+                            </Dropdown.Item>
+                        </>
+                }
             </Dropdown>
         </div>
     )
