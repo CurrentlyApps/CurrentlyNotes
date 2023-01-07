@@ -18,7 +18,7 @@ export default function Statusbar() {
             </div>
 
             <div className="lg:flex hidden w-1/3 justify-end ">
-                { context.user ? <img className="w-9 h-9 rounded-full mr-4" src={context.user.photoURL} alt="Rounded avatar"/> : ''}
+                { context.user ? <img className="w-9 h-9 rounded-full border-2 mr-4" src={context.user.photoURL} alt="Rounded avatar"/> : ''}
                 <StatusBarDropDown />
             </div>
         </div>
