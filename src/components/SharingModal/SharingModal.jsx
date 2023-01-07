@@ -22,7 +22,7 @@ export default function SharingModal() {
     values.forEach((val) => {
         radioButtonGroup1.push(
             <div key={val} className="flex items-center gap-2">
-                <Radio type="radio"  id={val} name="privacy" value={val} defaultChecked={ notePrivacy === val ? true :false } />
+                <Radio type="radio"  id={val} name="privacy" value={val} defaultChecked={ notePrivacy === val } />
                 <div className="capitalize">
                     { val }
                 </div>
