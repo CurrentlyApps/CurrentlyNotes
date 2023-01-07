@@ -10,19 +10,7 @@ export default function StatusBarDropDown() {
         <div className="my-auto p-0">
             <Dropdown label={ context.user ? context.user.displayName : 'Not Logged In'} inline={true}>
                 <Dropdown.Header>
-                    { 
-                        context.user == null
-                        ? <div className="cursor-pointer text-md py-2" onClick={ () => {signIn(context)} }> Login</div>
-                        : <div className="dropDown">
-                            <div className="flex flex-row">
-                                <div className="hidden lg:block">{ context.user.displayName }</div>
-                            </div>
-                            <span className="block text-sm font-medium truncate">
-                                { context.user.email }
-                            </span>
-                        </div>
-                    }
-                    
+                    <LoginOrProfile/>
                 </Dropdown.Header>
                 <Dropdown.Item>
                     <a href="https://www.currentlynotes.com/">Homepage</a>
