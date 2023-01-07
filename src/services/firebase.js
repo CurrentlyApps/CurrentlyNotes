@@ -23,9 +23,11 @@ export const db = getDatabase(app);
 
 export const signOutClick = function(context) {    
     logEvent(analytics, 'signed_out');
-    signOut(auth);
-    context.setUserState( null );
-    context.setCurrentNote( null );
+
+    signOut(auth).then(() => {
+        context.setUserState( null );
+        context.setCurrentNote( null );
+    });
 }
 
 export const signIn = function(context) {
