@@ -4,9 +4,13 @@ import { AppContext } from 'contexts/AppContext';
 import { signInWithGoogle, signOutClick, newNoteClicked } from 'services/firebase';
 import NoteListEntry from './NoteListEntry'
 
-export default function SidePanel(props) {
+export default function SidePanel() {
     const context = useContext(AppContext)
-    
+
+    if (!context.user) {
+        return null;
+    }
+
     return (
         <div className={`bg-zinc-200 relative transition-all duration-200 h-full ${context.extended ? 'w-4/5 lg:w-1/5' : '-translate-x-96 w-0' }`}>
             <div className="px-4 my-3 underline underline-offset-8 decoration-slate-800">

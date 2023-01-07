@@ -8,7 +8,7 @@ export default function EditorNoNoteSelected() {
         {
             context.user
             ? 'Select a note on the left, or create a new one!'
-            : 'Login now to get started!'
+            : ''
         }
         </div>   
     )
