@@ -16,14 +16,16 @@ export default function EditorNote() {
     const [showPreview, setShowPreview] = useState(true)
 
     const updateTitle = function(event){
-        let tempNote = { ...note, title: event.target.value }
+        let tempNote = { ...context.note, title: event.target.value }
         updateNote(tempNote, user_id)
     }
 
     const updateBody = function(event) {
-        let tempNote = { ...note, body: event.target.value }
+        let tempNote = { ...context.note, body: event.target.value }
         updateNote(tempNote, user_id)
     }
+
+    let setNote = context.setNote;
 
     const handleTab = e => {
         if (e.key === 'Tab') {
@@ -39,7 +41,6 @@ export default function EditorNote() {
     }
 
     const [loadingNote, setLoadingNote] = useState(true);
-    const [note, setNote] = useState({"title": "", "body": ""})
 
     useEffect( () => {
         const notesRef = ref(db, `/notes/users/${user_id}/notes/${post_id}`);
@@ -61,7 +62,7 @@ export default function EditorNote() {
         return () => {
             off(notesRef)
         }
-    }, [post_id, user_id, navigate]); 
+    }, [post_id, user_id, navigate, setNote]);
 
     if ( loadingNote ) {
         return (
@@ -89,7 +90,7 @@ export default function EditorNote() {
                 </div>
                 <input
                     className="w-full border-none outline-none focus:ring-0 text-xl px-4"
-                    value={ note.title }
+                    value={ context.note.title }
                     onChange={ updateTitle }
                     placeholder="Title"
                 />
@@ -97,7 +98,7 @@ export default function EditorNote() {
                 <textarea
                     onKeyDown={ handleTab }
                     className="h-full border-none outline-none focus:ring-0 overflow-auto px-4 scrollbar_thin"
-                    value={ note.body }
+                    value={ context.note.body }
                     onChange={ updateBody }
                     placeholder="Insert Text Here"
                 />
@@ -113,11 +114,11 @@ export default function EditorNote() {
 
                         <div className={`h-full overflow-y-auto scrollbar_thin  ${!context.editState ? 'w-full lg:px-64 px-2' : 'px-2'}`}>
                             <div className="text-xl">
-                                { note.title }
+                                { context.note.title }
                             </div>
                             <div className={`is_markdown`} >
                                 {
-                                    parse(converter.makeHtml(note.body))
+                                    parse(converter.makeHtml(context.note.body))
                                 }
                             </div>
                         </div>

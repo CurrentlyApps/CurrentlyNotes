@@ -12,6 +12,7 @@ function Home() {
   let navigate = useNavigate();
 
   const [currentNote, setCurrentNote] = useState(null);
+  const [note, setNote] = useState(null);
   const [noteList, setNoteState] = useState({});
   const [user, setUserState] = useState(null);
   const [editState, setEditState] = useState(true);
@@ -20,20 +21,22 @@ function Home() {
   const [loadingNotes, setLoadingNotes] = useState(true);
   
   const context = {
-      user: user,
-      noteList: noteList,
-      currentNote: currentNote,
-      editState: editState,
-      extended: extended,
-      modalShareNote: modalShareNote,
-      loadingNotes: loadingNotes,
-      setLoadingNotes: setLoadingNotes,
-      setModalShareNote: setModalShareNote,
-      setExtendedState: setExtendedState,
-      setEditState: setEditState,
-      setUserState: setUserState,
-      setCurrentNote: setCurrentNote,
-      setNoteState: setNoteState
+    user: user,
+    noteList: noteList,
+    currentNote: currentNote,
+    note: note,
+    setNote: setNote,
+    editState: editState,
+    extended: extended,
+    modalShareNote: modalShareNote,
+    loadingNotes: loadingNotes,
+    setLoadingNotes: setLoadingNotes,
+    setModalShareNote: setModalShareNote,
+    setExtendedState: setExtendedState,
+    setEditState: setEditState,
+    setUserState: setUserState,
+    setCurrentNote: setCurrentNote,
+    setNoteState: setNoteState
   }
 
   useEffect(() => {
