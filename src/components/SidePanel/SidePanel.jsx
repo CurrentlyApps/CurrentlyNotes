@@ -1,7 +1,7 @@
 import { DocumentPlusIcon, ArrowLeftOnRectangleIcon, HomeIcon } from '@heroicons/react/24/solid'
 import { useContext } from 'react';
 import { AppContext } from 'contexts/AppContext';
-import { signIn, signOutClick, newNoteClicked } from 'services/firebase';
+import { signInWithGoogle, signOutClick, newNoteClicked } from 'services/firebase';
 import NoteListEntry from './NoteListEntry'
 
 export default function SidePanel(props) {
@@ -41,7 +41,7 @@ export default function SidePanel(props) {
                         </div>
                     </div>
                 </>
-                : <div className="cursor-pointer text-lg text-zinc-800 font-bold px-4 py-2 block lg:hidden" onClick={ () => {signIn(context)} }> Login</div>
+                : <div className="cursor-pointer text-lg text-zinc-800 font-bold px-4 py-2 block lg:hidden" onClick={ () => {signInWithGoogle(context)} }> Login</div>
                 
             }
             <hr />
