@@ -1,6 +1,6 @@
 
 import { useEffect, useState} from "react";
-import SignInOptions from "./SignIn/SignInOptions";
+import AuthPopUp from "./SignIn/AuthPopUp";
 import { useSelector} from "react-redux";
 export default function LoginOrProfile () {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
@@ -14,7 +14,7 @@ export default function LoginOrProfile () {
 
   return (
       <>
-        <SignInOptions visible={loginModalOpen} setVisible={setLoginModalOpen}/>
+        <AuthPopUp visible={loginModalOpen} setVisible={setLoginModalOpen}/>
         {
           !user.isSignedIn
               ? <div className="cursor-pointer text-md py-2" onClick={ () => {setLoginModalOpen(true)} }> Login</div>
