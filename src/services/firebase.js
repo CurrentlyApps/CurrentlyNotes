@@ -26,7 +26,7 @@ export const signOutClick = function(context) {
 
     signOut(auth).then(() => {
         context.setUserState( null );
-        context.setCurrentNote( null );
+        context.setNote( null );
     });
 }
 
@@ -44,7 +44,7 @@ export const signInWithGoogle = function(context) {
 
 export const deleteNote = function(noteId, context) {
     const notesRef = ref(db, `/notes/users/${context.user.uid}/notes/${noteId}`);
-    context.setCurrentNote(null);
+    context.setNote(null);
     remove(notesRef)
     logEvent(analytics, 'note_deleted');
 }
@@ -58,9 +58,7 @@ export const newNoteClicked = function(context) {
         title: "Untitled Note",
         body: "",
         privacy: "private"
-    }).then(
-        () => context.setCurrentNote(newNoteRef.key)
-    )
+    })
 }
 
 export const updateNote = function(note, user_id){

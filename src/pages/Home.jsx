@@ -11,31 +11,23 @@ import {Outlet, useNavigate} from "react-router-dom";
 function Home() {
   let navigate = useNavigate();
 
-  const [currentNote, setCurrentNote] = useState(null);
+
   const [note, setNote] = useState(null);
   const [noteList, setNoteState] = useState({});
   const [user, setUserState] = useState(null);
-  const [editState, setEditState] = useState(true);
-  const [extended, setExtendedState] = useState(true);
   const [modalShareNote, setModalShareNote] = useState(null);
   const [loadingNotes, setLoadingNotes] = useState(true);
   
   const context = {
     user: user,
     noteList: noteList,
-    currentNote: currentNote,
     note: note,
     setNote: setNote,
-    editState: editState,
-    extended: extended,
     modalShareNote: modalShareNote,
     loadingNotes: loadingNotes,
     setLoadingNotes: setLoadingNotes,
     setModalShareNote: setModalShareNote,
-    setExtendedState: setExtendedState,
-    setEditState: setEditState,
     setUserState: setUserState,
-    setCurrentNote: setCurrentNote,
     setNoteState: setNoteState
   }
 
@@ -68,6 +60,9 @@ function Home() {
 
 
   return (
+    // Modals
+
+    // Main App
     <AppContext.Provider value={context}>
       <div className="flex flex-col w-screen h-screen overflow-hidden">
         <Statusbar/>

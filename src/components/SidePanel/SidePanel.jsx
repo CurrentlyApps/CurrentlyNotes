@@ -3,16 +3,19 @@ import { useContext } from 'react';
 import { AppContext } from 'contexts/AppContext';
 import { signInWithGoogle, signOutClick, newNoteClicked } from 'services/firebase';
 import NoteListEntry from './NoteListEntry'
+import {useSelector} from "react-redux";
 
 export default function SidePanel() {
     const context = useContext(AppContext)
+
+    const sidebarExtended = useSelector((state) => state.ui.sidebarExtended)
 
     if (!context.user) {
         return null;
     }
 
     return (
-        <div className={`bg-zinc-200 relative transition-all duration-200 h-full ${context.extended ? 'w-4/5 lg:w-1/5' : '-translate-x-96 w-0' }`}>
+        <div className={`bg-zinc-200 relative transition-all duration-200 h-full ${sidebarExtended ? 'w-4/5 lg:w-1/5' : '-translate-x-96 w-0' }`}>
             <div className="px-4 my-3 underline underline-offset-8 decoration-slate-800">
                 <div className="py-auto align-middle my-auto mr-1 tracking-widest uppercase lg:hidden block font-semibold">Currently</div>
             </div>
