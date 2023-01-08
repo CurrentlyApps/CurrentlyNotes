@@ -30,7 +30,7 @@ export default function StatusBarNoteTitle () {
   if (!editTitle) {
     return (
       <div hidden={editTitle}
-        className="duration-75 transition-all hover:underline underline-offset-8 px-4  cursor-pointer text-zinc-100 my-auto flex flex-r0w"
+        className="duration-75 transition-all truncate ... hover:underline underline-offset-8 px-4  cursor-pointer text-zinc-100 my-auto flex flex-r0w"
         onClick={ () => setEditTitle(true)} >
         { context.note.title }
         <PencilSquareIcon className={"w-3 my-auto ml-2 text-zinc-300"} />

@@ -68,8 +68,8 @@ export default function EditorNote() {
     }
 
     return (
-        <div className={`flex lg:flex-row flex-col transition-all h-full overflow-hidden ${context.extended ? 'lg:w-full w-1/5' : 'w-full'}`}>
-            <div className="flex flex-col lg:w-1/2 w-full px-4 lg:h-full h-1/2 resize-y">
+        <div className={`flex lg:flex-row flex-col transition-all h-full overflow-hidden w-full`}>
+            <div className={`flex flex-col w-full px-4 lg:h-full h-1/2 resize-y  ${showPreview ? 'lg:w-1/2 w-full' : 'lg:mx-auto lg:w-2/3'}`}>
                 <div className="font-light px-4">
                     <div className={"flex flex-row"}>
                         <div className="">
@@ -92,13 +92,13 @@ export default function EditorNote() {
             {
                 showPreview === true
                     ?
-                    <div className={`transition-all flex flex-col ${!context.editState ? 'w-full h-full' : 'lg:w-1/2 lg:h-full h-1/2'}`}>
-                        <div className={`font-light  ${!context.editState ? 'w-full lg:px-64 px-2' : 'px-2'}`}>
+                    <div className={`transition-all flex flex-col lg:w-1/2 lg:h-full h-1/2`}>
+                        <div className={`font-light w-full px-2`}>
                             Preview
                             <hr />
                         </div>
 
-                        <div className={`h-full overflow-y-auto scrollbar_thin  ${!context.editState ? 'w-full lg:px-64 px-2' : 'px-2'}`}>
+                        <div className={`h-full overflow-y-auto scrollbar_thin px-2`}>
                             <div className="text-xl">
                                 { context.note.title }
                             </div>
@@ -110,7 +110,6 @@ export default function EditorNote() {
                         </div>
                     </div>
                 : ""
-
             }
         </div>
     )
