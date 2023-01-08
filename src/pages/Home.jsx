@@ -6,7 +6,7 @@ import { AppContext } from "contexts/AppContext";
 import { onValue, ref } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import {Outlet, useNavigate} from "react-router-dom";
-
+import ModalManager from "components/UI/ModalManager";
 
 function Home() {
   let navigate = useNavigate();
@@ -15,7 +15,6 @@ function Home() {
   const [note, setNote] = useState(null);
   const [noteList, setNoteState] = useState({});
   const [user, setUserState] = useState(null);
-  const [modalShareNote, setModalShareNote] = useState(null);
   const [loadingNotes, setLoadingNotes] = useState(true);
   
   const context = {
@@ -23,10 +22,8 @@ function Home() {
     noteList: noteList,
     note: note,
     setNote: setNote,
-    modalShareNote: modalShareNote,
     loadingNotes: loadingNotes,
     setLoadingNotes: setLoadingNotes,
-    setModalShareNote: setModalShareNote,
     setUserState: setUserState,
     setNoteState: setNoteState
   }
@@ -65,6 +62,7 @@ function Home() {
     // Main App
     <AppContext.Provider value={context}>
       <div className="flex flex-col w-screen h-screen overflow-hidden">
+        <ModalManager/>
         <Statusbar/>
         <div className="flex flex-row h-screen overflow-auto">
           <SidePanel />

@@ -2,15 +2,22 @@ import { AppContext } from "contexts/AppContext";
 import { Button, Label, Modal, Radio, TextInput } from "flowbite-react";
 import { useContext, useState } from "react";
 import { setNotePrivacy, getShareableLink } from "services/noteSharing";
+import {useDispatch, useSelector} from "react-redux";
+import {closeModal} from "stores/UI/uiModals";
 
 export default function SharingModal() {
     const context = useContext(AppContext);
+    const dispatch = useDispatch();
+    const modalTitle = useSelector((state) => state.uiModal.modal);
+    const noteId = useSelector((state) => state.uiModal.modalData);
     const [copyConfirmHidden, setCopyConfirmHidden] = useState(true);
 
-    if (context.modalShareNote === null) {
-        return 
+    if (modalTitle !== "ShareOptions") {
+        return
     }
-    const note = context.noteList[context.modalShareNote]
+
+
+    const note = context.noteList[noteId]
     const notePrivacy = note.privacy;
     const shareableLink = getShareableLink(context, note);
     
@@ -30,12 +37,13 @@ export default function SharingModal() {
         )
     });
 
+
     const onPrivacyChange = function(event) {
         setNotePrivacy(context, note, event.target.value)
     }
 
     const onClose = function() {
-        context.setModalShareNote(null)
+        dispatch(closeModal());
     }
 
     function copyShareLinkToClipboard() {
@@ -50,7 +58,7 @@ export default function SharingModal() {
 
     return (
         <div>
-            <Modal show={note != null} onClose={onClose}>
+            <Modal show={true} onClose={onClose}>
                 <Modal.Header>
                     Sharing Options
                 </Modal.Header>

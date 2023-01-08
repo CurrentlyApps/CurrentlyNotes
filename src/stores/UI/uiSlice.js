@@ -1,5 +1,4 @@
 import {createSlice} from "@reduxjs/toolkit";
-
 export const uiSlice = createSlice({
   name: "ui",
   initialState: {
@@ -8,7 +7,7 @@ export const uiSlice = createSlice({
   reducers: {
     toggleSidebar: (state) => {
       state.sidebarExtended = !state.sidebarExtended;
-    }
+    },
   },
 });
 
