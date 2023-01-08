@@ -12,25 +12,27 @@ import {
 import Editor from 'components/Editor/Editor';
 import EditorNoNoteSelected from 'components/Editor/EditorNoNoteSelected';
 import EditorNote from 'components/Editor/EditorNote';
-
+import store from 'stores/store';
+import { Provider } from 'react-redux';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Router>
-    <Routes>
-      <Route path="/" element={<Home />} >
-        <Route path="" element={<Editor />} >
-          <Route path="" element={<EditorNoNoteSelected/>} />
-          <Route path="edit/error" element={<PublishedPageError/>} />
-          <Route path="edit/:user_id/:post_id" element={<EditorNote />} />
+  <Provider store={store} >
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} >
+          <Route path="" element={<Editor />} >
+            <Route path="" element={<EditorNoNoteSelected/>} />
+            <Route path="edit/error" element={<PublishedPageError/>} />
+            <Route path="edit/:user_id/:post_id" element={<EditorNote />} />
+          </Route>
         </Route>
-      </Route>
-      
-      <Route path="/page/:user_id/:post_id" element={<PublishedPage />} />
-      <Route path="/page/error" element={<PublishedPageError />} />
-    </Routes>
-  </Router>
+        <Route path="/page/:user_id/:post_id" element={<PublishedPage />} />
+        <Route path="/page/error" element={<PublishedPageError />} />
+      </Routes>
+    </Router>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
