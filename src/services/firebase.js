@@ -2,6 +2,8 @@ import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { set, getDatabase, ref, push, remove } from "firebase/database";
 import { getAnalytics, logEvent } from "firebase/analytics";
+import store from "stores/store";
+import {logout, setUserData} from "../stores/Auth/authSlice";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_apiKey,
@@ -21,20 +23,24 @@ const auth = getAuth();
 const provider = new GoogleAuthProvider();
 export const db = getDatabase(app);
 
-export const signOutClick = function(context) {    
+export const signOutClick = function() {
     logEvent(analytics, 'signed_out');
 
     signOut(auth).then(() => {
-        context.setUserState( null );
-        context.setNote( null );
+        store.dispatch(logout());
     });
 }
 
-export const signInWithGoogle = function(context) {
+export const signInWithGoogle = function() {
     logEvent(analytics, 'signed_in');
     signInWithPopup(auth, provider)
         .then((result) => {
-            context.setUserState(result.user);
+            store.dispatch(setUserData({
+                displayName: result.user.displayName,
+                photoURL: result.user.photoURL,
+                email: result.user.email,
+                uid: result.user.uid
+            }));
             updateProfile();
         }).catch((error) => {
             console.log(error)
@@ -42,16 +48,17 @@ export const signInWithGoogle = function(context) {
     );
 }
 
-export const deleteNote = function(noteId, context) {
-    const notesRef = ref(db, `/notes/users/${context.user.uid}/notes/${noteId}`);
-    context.setNote(null);
+export const deleteNote = function(noteId) {
+    let user = store.getState().auth;
+    const notesRef = ref(db, `/notes/users/${user.uid}/notes/${noteId}`);
     remove(notesRef)
     logEvent(analytics, 'note_deleted');
 }
 
-export const newNoteClicked = function(context) {
+export const newNoteClicked = function() {
+    let user = store.getState().auth;
     logEvent(analytics, 'note_added');
-    const notesRef = ref(db, `notes/users/${context.user.uid}/notes`);
+    const notesRef = ref(db, `notes/users/${user.uid}/notes`);
     const newNoteRef = push(notesRef);
     set(newNoteRef, {
         id: newNoteRef.key,

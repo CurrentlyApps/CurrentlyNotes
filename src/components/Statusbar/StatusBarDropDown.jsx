@@ -1,16 +1,15 @@
-import { AppContext } from "contexts/AppContext";
 import { Dropdown } from "flowbite-react";
-import { useContext } from "react";
-import { signOutClick } from "services/firebase";
 import LoginOrProfile from "components/Auth/LoginOrProfile";
 import {ArrowRightOnRectangleIcon, Cog6ToothIcon, HomeModernIcon, UserIcon} from "@heroicons/react/24/outline";
+import { useSelector} from "react-redux";
+import {signOutClick} from "../../services/firebase";
 
-export default function StatusBarDropDown() {  
-    const context = useContext(AppContext)
+export default function StatusBarDropDown() {
+    const user = useSelector(state => state.auth);
 
     return (
         <div className="my-auto p-0">
-            <Dropdown label={ context.user ? context.user.displayName : 'Not Logged In'} inline={true}>
+            <Dropdown label={ user ? user.displayName : 'Not Logged In'} inline={true}>
                 <Dropdown.Header>
                     <LoginOrProfile/>
                 </Dropdown.Header>
@@ -18,8 +17,7 @@ export default function StatusBarDropDown() {
                     <HomeModernIcon className="w-4 mr-2"/>
                     <a href="https://www.currentlynotes.com/">Homepage</a>
                 </Dropdown.Item>
-                {
-                    context.user == null
+                {!user.isSignedIn
                         ? ""
                         :
                         <>
@@ -32,7 +30,7 @@ export default function StatusBarDropDown() {
                                 App Settings
                             </Dropdown.Item>
                             <Dropdown.Divider />
-                            <Dropdown.Item  onClick={ () => {signOutClick(context)} }>
+                            <Dropdown.Item  onClick={ () => {signOutClick()}}>
                                 <ArrowRightOnRectangleIcon className={"w-4 mr-2"}/>
                                 Sign out
                             </Dropdown.Item>

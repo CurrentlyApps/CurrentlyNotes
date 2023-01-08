@@ -1,23 +1,27 @@
 import {Button, Checkbox, Label, Modal, TextInput} from "flowbite-react";
-import {signInWithGoogle} from "services/firebase";
-import {useContext, useState} from "react";
-import {AppContext} from "contexts/AppContext";
+import { useState} from "react";
 import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
+import {signInWithGoogle} from "../../../services/firebase";
+import {useSelector} from "react-redux";
 
 export default function SignInOptions ({visible, setVisible}) {
-  const context = useContext(AppContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
+
+
+
+  const isSignedIn = useSelector((state) => state.auth.isSignedIn);
+
 
   const signIn = () => {
     const auth = getAuth();
 
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          const user = userCredential.user;
-          context.setUserState( user );
+          console.log(userCredential);
+
           return true;
         })
         .catch((error) => {
@@ -30,7 +34,7 @@ export default function SignInOptions ({visible, setVisible}) {
 
   return (
       <Modal
-          show={visible || !context.user}
+          show={visible || !isSignedIn}
           size={"md"}
           popup={true}
           onClose={ () => {setVisible(false)} }
@@ -81,7 +85,7 @@ export default function SignInOptions ({visible, setVisible}) {
               <div>
                 <Checkbox
                     id="show-password"
-                    checked={showPassword}
+                  checked={showPassword}
                     onChange={ () => {setShowPassword(!showPassword)} }
                 />
                 <Label htmlFor={"show-password"} > Show Password </Label>
@@ -101,7 +105,7 @@ export default function SignInOptions ({visible, setVisible}) {
             <div className={"w-full text-center"}>
               Or
             </div>
-            <Button color="light" className={"btn p-2 btn-primary mx-auto"} onClick={signInWithGoogle}>
+            <Button color="light" className={"btn p-2 btn-primary mx-auto"} onClick={() => signInWithGoogle()}>
               <div className={"flex flex-row "}>
                 <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" className="w-6 h-6 mr-2" alt="Google Logo"/>
                 Sign In with Google

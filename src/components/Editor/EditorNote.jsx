@@ -1,26 +1,24 @@
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { db, updateNote } from "services/firebase"
-import { AppContext } from 'contexts/AppContext';
 import parse from 'html-react-parser';
 import Showdown from "showdown";
 import { useNavigate, useParams } from "react-router-dom";
 import { Spinner } from "flowbite-react";
 import { off, onValue, ref } from "firebase/database";
+import {useDispatch, useSelector} from "react-redux";
+import {setNote} from "../../stores/Notes/notesSlice";
 
 export default function EditorNote() {
     let navigate = useNavigate();
     const converter = new Showdown.Converter()
-    const context = useContext(AppContext)
     const { user_id, post_id } = useParams();
-
+    const currentNote = useSelector((state) => state.notes.currentNote)
     const [showPreview, setShowPreview] = useState(true)
-
+    const dispatch = useDispatch();
     const updateBody = function(event) {
-        let tempNote = { ...context.note, body: event.target.value }
+        let tempNote = { ...currentNote, body: event.target.value }
         updateNote(tempNote, user_id)
     }
-
-    let setNote = context.setNote;
 
     const handleTab = e => {
         if (e.key === 'Tab') {
@@ -39,13 +37,15 @@ export default function EditorNote() {
 
     useEffect( () => {
         const notesRef = ref(db, `/notes/users/${user_id}/notes/${post_id}`);
+        setLoadingNote(true);
         onValue(notesRef, (snapshot) => {
             const data = snapshot.val();
             if (!data) {
                 navigate("/edit/error");
             }
             setLoadingNote(false);
-            setNote(data);
+
+            dispatch(setNote({...data}));
             if( data ) {
                 document.title = data.title + " - Currently Notes";
             } else {
@@ -57,7 +57,7 @@ export default function EditorNote() {
         return () => {
             off(notesRef)
         }
-    }, [post_id, user_id, navigate, setNote]);
+    }, [post_id, user_id, navigate, dispatch]);
 
     if ( loadingNote ) {
         return (
@@ -84,7 +84,7 @@ export default function EditorNote() {
                 <textarea
                     onKeyDown={ handleTab }
                     className="h-full border-none outline-none focus:ring-0 overflow-auto px-4 scrollbar_thin"
-                    value={ context.note.body }
+                    value={ currentNote.body }
                     onChange={ updateBody }
                     placeholder="Insert Text Here"
                 />
@@ -100,11 +100,11 @@ export default function EditorNote() {
 
                         <div className={`h-full overflow-y-auto scrollbar_thin px-2`}>
                             <div className="text-xl">
-                                { context.note.title }
+                                { currentNote.title }
                             </div>
                             <div className={`is_markdown`} >
                                 {
-                                    parse(converter.makeHtml(context.note.body))
+                                    parse(converter.makeHtml(currentNote.body))
                                 }
                             </div>
                         </div>

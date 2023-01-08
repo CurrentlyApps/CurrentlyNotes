@@ -1,17 +1,19 @@
 import { ref, set } from "firebase/database";
 import { db } from "./firebase";
+import store from "../stores/store";
 
-
-export const setNotePrivacy = function(context, note, privacy) {
-    const notePrivacyRef = ref(db, `notes/users/${context.user.uid}/notes/${note.id}/privacy`);
+export const setNotePrivacy = function(note, privacy) {
+    let user = store.getState().auth;
+    const notePrivacyRef = ref(db, `notes/users/${user.uid}/notes/${note.id}/privacy`);
     set(notePrivacyRef, privacy)
 }
 
 
-export function getShareableLink(context, note) {
-    return `${window.location.host}/page/${context.user.uid}/${note.id}`;
+export function getShareableLink(note) {
+    let user = store.getState().auth;
+    return `${window.location.host}/page/${user.uid}/${note.id}`;
 }
 
-export function copyShareableLink(context, note) {
-    navigator.clipboard.writeText(getShareableLink(context, note))
+export function copyShareableLink(note) {
+    navigator.clipboard.writeText(getShareableLink( note))
 }
