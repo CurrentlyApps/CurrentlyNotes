@@ -1,9 +1,8 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { set, getDatabase, ref, push, remove } from "firebase/database";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import store from "stores/store";
-import {logout, setUserData} from "../stores/Auth/authSlice";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_apiKey,
@@ -18,35 +17,7 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 export const analytics = getAnalytics(app);
-
-const auth = getAuth();
-const provider = new GoogleAuthProvider();
 export const db = getDatabase(app);
-
-export const signOutClick = function() {
-    logEvent(analytics, 'signed_out');
-
-    signOut(auth).then(() => {
-        store.dispatch(logout());
-    });
-}
-
-export const signInWithGoogle = function() {
-    logEvent(analytics, 'signed_in');
-    signInWithPopup(auth, provider)
-        .then((result) => {
-            store.dispatch(setUserData({
-                displayName: result.user.displayName,
-                photoURL: result.user.photoURL,
-                email: result.user.email,
-                uid: result.user.uid
-            }));
-            updateProfile();
-        }).catch((error) => {
-            console.log(error)
-        }
-    );
-}
 
 export const deleteNote = function(noteId) {
     let user = store.getState().auth;

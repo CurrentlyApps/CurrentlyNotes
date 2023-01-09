@@ -1,12 +1,13 @@
 import {useEffect} from "react";
 import {getAuth} from "firebase/auth";
 import {onValue, ref} from "firebase/database";
-import {db} from "../../services/firebase";
-import {logout, setUserData} from "../../stores/Auth/authSlice";
+import {db} from "services/firebase";
+import {logout} from "stores/Auth/authSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import {setNotes} from "../../stores/Notes/notesSlice";
-
+import {setNotes} from "stores/Notes/notesSlice";
+import authService from "services/firebaseAuthService";
+import {openModal} from "../../stores/UI/uiModals";
 export default function UserStateManager() {
   const dispatch = useDispatch();
   const navigate = useNavigate()
@@ -15,15 +16,7 @@ export default function UserStateManager() {
   useEffect(() => {
     getAuth().onAuthStateChanged(function(user) {
       if( user ) {
-        // Set User Information
-        dispatch(setUserData({
-          displayName: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL,
-          uid: user.uid
-        }));
-
-        // Set User Notes
+        authService.setUser(user);
         const notesRef = ref(db, `/notes/users/${user.uid}/notes`);
         onValue(notesRef, (snapshot) => {
           let data = snapshot.val();
@@ -31,12 +24,14 @@ export default function UserStateManager() {
         });
       } else {
         dispatch(logout());
+        dispatch(openModal("Login"));
       }
     });
   });
 
+
   useEffect(() => {
-    if ( user.isSignedIn == null ) {
+    if ( !user.isSignedIn  ) {
       navigate("/");
     }
   }, [navigate, user.isSignedIn]);
