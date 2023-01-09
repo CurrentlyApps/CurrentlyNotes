@@ -13,7 +13,7 @@ import {
 } from "firebase/auth";
 import {logout, setUserData} from "../stores/Auth/authSlice";
 import store from "stores/store";
-import {setNote} from "../stores/Notes/notesSlice";
+import {setNote, setNotes} from "../stores/Notes/notesSlice";
 
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
@@ -43,6 +43,7 @@ const authService = {
   signOut : () => {
     signOut(auth).then(() => {
       document.title = "Currently Notes";
+      store.dispatch(setNotes([]));
       store.dispatch(setNote(null))
       store.dispatch(logout());
     });
