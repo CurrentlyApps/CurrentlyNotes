@@ -1,10 +1,6 @@
 import {useState} from "react";
-import {useDispatch} from "react-redux";
-import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
-import {setUserData} from "../../../stores/Auth/authSlice";
 import {Button, Checkbox, Label, TextInput} from "flowbite-react";
-import {signInWithGoogle} from "../../../services/firebase";
-
+import authService from "services/firebaseAuthService";
 
 export default function SignIn({setIsLoginScreen}) {
   const [email, setEmail] = useState("");
@@ -12,28 +8,12 @@ export default function SignIn({setIsLoginScreen}) {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
 
-  const dispatch = useDispatch();
   const signIn = () => {
-    const auth = getAuth();
-
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        dispatch(setUserData({
-          isSignedIn: true,
-          email: userCredential.user.email,
-          displayName: userCredential.user.displayName,
-          photoURL: userCredential.user.photoURL,
-          uid: userCredential.user.uid,
-        }));
-
-        return true;
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        if (errorCode === 'auth/wrong-password' || errorCode === 'auth/user-not-found') {
-          setError('Check your email and password and try again.');
-        }
-      });
+    authService.signInWithPassword(email, password, () => {}, (error) => {
+      if (error.errorCode === 'auth/wrong-password' || error.errorCode === 'auth/user-not-found') {
+        setError('Check your email and password and try again.');
+      }
+    });
   }
 
   return (
@@ -102,7 +82,7 @@ export default function SignIn({setIsLoginScreen}) {
       <div className={"w-full text-center"}>
         Or
       </div>
-      <Button color="light" className={"btn p-2 btn-primary mx-auto"} onClick={() => signInWithGoogle()}>
+      <Button color="light" className={"btn p-2 btn-primary mx-auto"} onClick={() => authService.signInWithGoogle()}>
         <div className={"flex flex-row "}>
           <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" className="w-6 h-6 mr-2" alt="Google Logo"/>
           Sign In with Google
