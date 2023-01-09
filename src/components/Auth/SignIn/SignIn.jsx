@@ -33,6 +33,7 @@ export default function SignIn({setIsLoginScreen}) {
     authService.signInWithGoogle(() => {
       setIsLoadingGoogle(false);
     }, (error) => {
+      console.log(error)
       setError(error.code);
       setIsLoadingGoogle(false);
     });

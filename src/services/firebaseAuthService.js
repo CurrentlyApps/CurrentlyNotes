@@ -6,6 +6,7 @@ import {
   linkWithCredential,
   signInWithPopup,
   signOut,
+  deleteUser,
   sendPasswordResetEmail,
   unlink
 } from "firebase/auth";
@@ -45,12 +46,13 @@ const authService = {
     });
   },
 
-  signInWithGoogle : () => {
+  signInWithGoogle : (res, err) => {
     signInWithPopup(auth, provider)
       .then((result) => {
+        res();
         authService.setUser(result.user);
       }).catch((error) => {
-        console.log(error)
+        err(error);
       }
     );
   },
@@ -89,6 +91,23 @@ const authService = {
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
       err(error);
+    });
+  },
+
+  requestDeleteAccount (res) {
+    deleteUser(auth.currentUser).then(() => {
+      res();
+      authService.signOut();
+    }).catch((error) => {
+      if (error.code === 'auth/requires-recent-login') {
+        signInWithPopup(auth, provider)
+          .then(() => {
+            authService.requestDeleteAccount();
+          }).catch((error) => {
+            console.log(error)
+          }
+        );
+      }
     });
   },
 

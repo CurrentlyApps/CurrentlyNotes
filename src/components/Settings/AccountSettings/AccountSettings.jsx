@@ -1,10 +1,11 @@
-import { Modal, } from "flowbite-react";
+import { Modal,} from "flowbite-react";
 import {useDispatch} from "react-redux";
 import {closeModal} from "stores/UI/uiModals";
 
 import GoogleProviderSettings from "./GoogleProviderSetting";
 import EmailProviderSettings from "./EmailProviderSettings";
 import PasswordSettings from "./PasswordSettings";
+import DangerZoneSettings from "./DangerZoneSettings";
 
 export default function AccountSettings() {
   const dispatch = useDispatch();
@@ -31,6 +32,11 @@ export default function AccountSettings() {
             <hr/>
           </div>
           <PasswordSettings/>
+          <div className={"text-lg font-semibold"}>
+            Danger Zone
+            <hr/>
+          </div>
+          <DangerZoneSettings/>
         </div>
       </Modal.Body>
     </Modal>
