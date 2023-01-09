@@ -5,7 +5,9 @@ import {
   signInWithEmailAndPassword,
   linkWithCredential,
   signInWithPopup,
-  signOut
+  signOut,
+  sendPasswordResetEmail,
+  unlink
 } from "firebase/auth";
 import {logout, setUserData} from "../stores/Auth/authSlice";
 import store from "stores/store";
@@ -78,6 +80,26 @@ const authService = {
       }
     });
   },
+
+  requestPasswordReset(res, err) {
+    sendPasswordResetEmail(auth, auth.currentUser.email).then(() => {
+      res();
+    }).catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+      err(error);
+    });
+  },
+
+  devOnlyUnlinkEmailProvider : (res, err) => {
+    const user = auth.currentUser;
+    unlink(user, 'password').then(() => {
+      res();
+    }).catch((error) => {
+      err(error);
+    });
+  }
 }
 
 export default authService;
