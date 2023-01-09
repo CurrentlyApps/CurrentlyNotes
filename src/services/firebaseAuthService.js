@@ -9,7 +9,7 @@ import {
 import {logout, setUserData} from "../stores/Auth/authSlice";
 import store from "stores/store";
 import {logEvent} from "firebase/analytics";
-import {analytics, updateProfile} from "./firebase";
+import {analytics} from "./firebase";
 
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
@@ -46,7 +46,6 @@ const authService = {
     signInWithPopup(auth, provider)
       .then((result) => {
         authService.setUser(result.user);
-        updateProfile();
       }).catch((error) => {
         console.log(error)
       }

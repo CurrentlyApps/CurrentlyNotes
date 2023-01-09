@@ -1,5 +1,4 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
 import { set, getDatabase, ref, push, remove } from "firebase/database";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import store from "stores/store";
@@ -44,11 +43,3 @@ export const updateNote = function(note, user_id){
     set(notesRef, note)
   }
 
-export const updateProfile = function() {
-    const user = getAuth().currentUser;
-    const userRef = ref(db, `notes/users/${user.uid}/profile`)
-    set(userRef, {
-        displayName: user.displayName,
-        email: user.email
-    });
-}
