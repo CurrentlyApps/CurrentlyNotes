@@ -1,32 +1,17 @@
-import {Button, Modal, TextInput} from "flowbite-react";
-import {EmailAuthProvider, getAuth, linkWithCredential} from "firebase/auth";
-import {useState} from "react";
+import { Modal, } from "flowbite-react";
 import {useDispatch} from "react-redux";
-import {closeModal} from "../../../stores/UI/uiModals";
+import {closeModal} from "stores/UI/uiModals";
+
+import GoogleProviderSettings from "./GoogleProviderSetting";
+import EmailProviderSettings from "./EmailProviderSettings";
+import PasswordSettings from "./PasswordSettings";
 
 export default function AccountSettings() {
   const dispatch = useDispatch();
-  const userData = getAuth().currentUser;
-
-  const email = userData.email;
-  const [password, setPassword] = useState("");
-  const linkAccount = () => {
-    const credential = EmailAuthProvider.credential(email, password);
-    const auth = getAuth();
-    linkWithCredential(auth.currentUser, credential).then((usercred) => {
-      console.log(usercred);
-    }).catch((error) => {
-      console.log(error);
-    });
-
-
-  }
 
   return (
-    <Modal show={true} size={"3xl"} onClose={() => dispatch(closeModal())}>
-      <Modal.Header>
-        Account Settings
-      </Modal.Header>
+    <Modal popup={true} show={true} size={"3xl"} onClose={() => dispatch(closeModal())}>
+      <Modal.Header/>
       <Modal.Body>
         <div className="modalBody space-y-8">
           <div className={"text-2xl"}>
@@ -34,14 +19,18 @@ export default function AccountSettings() {
           </div>
           <div className={"text-lg font-semibold"}>
             Login Providers
+            <hr/>
           </div>
-          <hr/>
-          <div>
-            Set Password
-            {password}
-            <TextInput type={"password"}  placeholder={"Password"} onChange={ (e) => {setPassword(e.target.value)}}/>
-            <Button onClick={() => linkAccount()} >Set Password</Button>
+          <div className={"space-y-8"}>
+            <GoogleProviderSettings/>
+            <EmailProviderSettings/>
           </div>
+
+          <div className={"text-lg font-semibold"}>
+            Password
+            <hr/>
+          </div>
+          <PasswordSettings/>
         </div>
       </Modal.Body>
     </Modal>
