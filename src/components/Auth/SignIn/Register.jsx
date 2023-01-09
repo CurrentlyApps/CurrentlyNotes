@@ -1,13 +1,22 @@
-import {Button, Label, TextInput} from "flowbite-react";
+import {Button, Label, Spinner, TextInput} from "flowbite-react";
 import {useState} from "react";
+import authService from "services/firebaseAuthService";
 
 export default function Register({setIsLoginScreen}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [verifyPassword, setVerifyPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const createPasswordAccount = () => {
-
+    setIsLoading(true);
+    authService.createPasswordAccount(email, password, ()=> {
+      setIsLoading(false);
+    }, (error) => {
+      setError(error.message);
+      setIsLoading(false);
+    });
   }
 
   return (
@@ -15,6 +24,7 @@ export default function Register({setIsLoginScreen}) {
       <h3 className="text-xl font-medium text-gray-900 dark:text-white">
         Register to Currently Notes
       </h3>
+      {error && <p className="text-red-500 text-sm">{error}</p>}
       <div>
         <div className="mb-2 block">
           <Label
@@ -47,6 +57,11 @@ export default function Register({setIsLoginScreen}) {
       </div>
       <div>
         <div className="mb-2 block">
+          {
+            password !== verifyPassword &&
+            <p className="text-red-500 text-sm">Passwords do not match</p>
+          }
+
           <Label
             htmlFor="verify"
             value="Verify password"
@@ -62,7 +77,12 @@ export default function Register({setIsLoginScreen}) {
       </div>
       <div className="w-full">
         <Button onClick={ createPasswordAccount } >
-          Create a Currently Account!
+          {
+            isLoading ?
+              <Spinner className="w-5 h-5 text-white" />
+              :
+              <span className={"pl-3"}>Create a Currently Account!</span>
+          }
         </Button>
       </div>
       <button className="w-full text-center text-sm text-blue-700 hover:underline dark:text-blue-500" onClick={() => setIsLoginScreen(true)}>
