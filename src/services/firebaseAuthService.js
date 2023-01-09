@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   linkWithCredential,
   signInWithPopup,
+  sendEmailVerification,
   signOut,
   deleteUser,
   sendPasswordResetEmail,
@@ -29,6 +30,7 @@ const authService = {
 
   createPasswordAccount : (email, password, res, err) => {
     createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
+      sendEmailVerification(userCredential.user);
       authService.setUser(userCredential.user);
       res();
     }).catch((error) => {
@@ -67,14 +69,18 @@ const authService = {
   },
 
   linkEmailPassword : (email, password, res, err) => {
+    const originalUID = auth.currentUser.uid;
     linkWithCredential(auth.currentUser, EmailAuthProvider.credential(email, password)).then((usercred) => {
       authService.setUser(usercred.user);
       res();
     }).catch((error) => {
       if (error.code === 'auth/requires-recent-login') {
         signInWithPopup(auth, provider)
-          .then(() => {
-            authService.linkEmailPassword(email, password, res, err);
+          .then((result) => {
+            if (result.user.uid === originalUID) {
+              authService.linkEmailPassword(email, password, res, err);
+            }
+
           }).catch((error) => {
             err(error);
           }
@@ -95,14 +101,18 @@ const authService = {
   },
 
   requestDeleteAccount (res) {
+    const originalUID = auth.currentUser.uid;
+
     deleteUser(auth.currentUser).then(() => {
       res();
       authService.signOut();
     }).catch((error) => {
       if (error.code === 'auth/requires-recent-login') {
         signInWithPopup(auth, provider)
-          .then(() => {
-            authService.requestDeleteAccount();
+          .then((result) => {
+            if (result.user.uid === originalUID) {
+              authService.requestDeleteAccount();
+            }
           }).catch((error) => {
             console.log(error)
           }
