@@ -60,7 +60,7 @@ export default function SharingModal() {
         size={"md"}>
         <Modal.Header/>
         <Modal.Body>
-          <div className="space-y-6 px-3 sm:pb-6 lg:px-8 xl:pb-8">
+          <div className="modalBody">
             <div className={"font-semibold"}>
               Sharing Options
             </div>

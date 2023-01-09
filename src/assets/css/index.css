@@ -1,6 +1,11 @@
+@import "cn_scrollbars.css";
+@import "cn_modal.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 
 body {
   margin: 0;

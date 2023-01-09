@@ -28,7 +28,10 @@ export default function AccountSettings() {
         Account Settings
       </Modal.Header>
       <Modal.Body>
-        <div className="flex flex-col gap-4">
+        <div className="modalBody space-y-8">
+          <div className={"text-2xl"}>
+            Account Settings
+          </div>
           <div className={"text-lg font-semibold"}>
             Login Providers
           </div>

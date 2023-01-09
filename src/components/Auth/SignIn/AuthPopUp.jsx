@@ -36,7 +36,7 @@ export default function AuthPopUp () {
 
     >
       <Modal.Body>
-        <div className="pt-10 space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
+        <div className="pt-10 modalBody">
           {screenRender()}
         </div>
       </Modal.Body>
