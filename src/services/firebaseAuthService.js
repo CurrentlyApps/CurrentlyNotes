@@ -38,6 +38,7 @@ const authService = {
 
   signOut : () => {
     signOut(auth).then(() => {
+      document.title = "Currently Notes";
       store.dispatch(setNote(null))
       store.dispatch(logout());
     });
