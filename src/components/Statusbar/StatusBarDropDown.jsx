@@ -10,7 +10,7 @@ export default function StatusBarDropDown() {
     const dispatch = useDispatch()
     return (
         <div className="my-auto p-0">
-            <Dropdown label={ user ? user.displayName : 'Not Logged In'} inline={true}>
+            <Dropdown label={ user.displayName } inline={true}>
                 <Dropdown.Header>
                     <LoginOrProfile/>
                 </Dropdown.Header>
