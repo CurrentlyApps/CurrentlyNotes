@@ -14,13 +14,12 @@ export default function EmailProviderSettingsAddPassword ({isVisible, setIsVisib
 
   const handleAddPassword = () => {
     setIsLoading(true);
-    authService.linkEmailPassword(user, password, () => {
+    authService.linkEmailPassword(user.email, password, () => {
       setIsLoading(false);
       setIsVisible(false);
     }, (error) => {
       setIsLoading(false);
-      setError(error);
-      console.log(error);
+      setError(error.message);
     });
   }
 
@@ -79,8 +78,10 @@ export default function EmailProviderSettingsAddPassword ({isVisible, setIsVisib
           <div>
             <div className="mb-2 block">
               {
-                password !== passwordConfirm &&
-                <p className="text-red-500 text-sm">Passwords do not match</p>
+                password !== passwordConfirm && passwordConfirm.length > 0 ?
+                  <p className="text-red-500 text-sm">Passwords do not match</p>
+                  :
+                  null
               }
 
               <Label

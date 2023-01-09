@@ -9,8 +9,6 @@ import {
 } from "firebase/auth";
 import {logout, setUserData} from "../stores/Auth/authSlice";
 import store from "stores/store";
-import {logEvent} from "firebase/analytics";
-import {analytics} from "./firebase";
 import {setNote} from "../stores/Notes/notesSlice";
 
 const auth = getAuth();
@@ -46,7 +44,6 @@ const authService = {
   },
 
   signInWithGoogle : () => {
-    logEvent(analytics, 'signed_in');
     signInWithPopup(auth, provider)
       .then((result) => {
         authService.setUser(result.user);
@@ -70,10 +67,17 @@ const authService = {
       authService.setUser(usercred.user);
       res();
     }).catch((error) => {
-      console.log(error);
-      err(error);
+      if (error.code === 'auth/requires-recent-login') {
+        signInWithPopup(auth, provider)
+          .then(() => {
+            authService.linkEmailPassword(email, password, res, err);
+          }).catch((error) => {
+            err(error);
+          }
+        );
+      }
     });
-  }
+  },
 }
 
 export default authService;
