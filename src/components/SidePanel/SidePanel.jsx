@@ -23,7 +23,7 @@ export default function SidePanel() {
                 </div>
             </div>
             <hr />
-            { NoteEntryList(notes) }
+            { notes ? NoteEntryList(notes) : null }
         </div>
     )
 }
