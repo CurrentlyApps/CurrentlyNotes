@@ -1,8 +1,9 @@
 import {
-  createUserWithEmailAndPassword,
+  createUserWithEmailAndPassword, EmailAuthProvider,
   getAuth,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
+  linkWithCredential,
   signInWithPopup,
   signOut
 } from "firebase/auth";
@@ -60,6 +61,16 @@ const authService = {
       authService.setUser(userCredential.user);
       return true;
     }).catch((error) => {
+      err(error);
+    });
+  },
+
+  linkEmailPassword : (email, password, res, err) => {
+    linkWithCredential(auth.currentUser, EmailAuthProvider.credential(email, password)).then((usercred) => {
+      authService.setUser(usercred.user);
+      res();
+    }).catch((error) => {
+      console.log(error);
       err(error);
     });
   }

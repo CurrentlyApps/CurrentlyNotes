@@ -2,14 +2,18 @@ import {Button, Tooltip} from "flowbite-react";
 import {getAuth} from "firebase/auth";
 import {QuestionMarkCircleIcon} from "@heroicons/react/24/outline";
 import {EnvelopeIcon} from "@heroicons/react/24/outline";
+import EmailProviderSettingsAddPassword from "./EmailProviderSettingsAddPassword";
+import {useState} from "react";
 
 export default function GoogleProviderSettings() {
+  const [showAddPasswordModal, setShowAddPasswordModal] = useState(false);
   const authUser = getAuth().currentUser;
   const emailIsProvider = authUser.providerData.some((provider) => {
     return provider.providerId === "password";
   });
   return (
     <div>
+      <EmailProviderSettingsAddPassword isVisible={showAddPasswordModal} setIsVisible={setShowAddPasswordModal}/>
       <div className={"flex flex-row"}>
         <div className={"flex flex-row "}>
           <EnvelopeIcon className="w-12 h-12 mr-2"/>
@@ -38,7 +42,9 @@ export default function GoogleProviderSettings() {
                 <Button disabled={true} color={"light"}>Connected</Button>
               </div>
               :
-              <Button >Add a password</Button>
+              <Button onClick={() => setShowAddPasswordModal(true)}>
+                Add a password
+              </Button>
           }
         </div>
       </div>
