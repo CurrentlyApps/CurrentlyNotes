@@ -76,7 +76,9 @@ export default function Register({setIsLoginScreen}) {
         />
       </div>
       <div className="w-full">
-        <Button onClick={ createPasswordAccount } >
+        <Button
+          disabled={password !== verifyPassword || password === "" || isLoading}
+          onClick={ createPasswordAccount } >
           {
             isLoading ?
               <Spinner className="w-5 h-5 text-white" />
