@@ -20,9 +20,15 @@ export default function Statusbar() {
           <div className="lg:mx-auto flex justify-center "><StatusBarNoteTitle/>
           </div>
 
-          <div className="lg:flex hidden  justify-end ">
-              { user.isSignedIn ? <img className="w-9 h-9 rounded-full border-2 mr-4" src={user.photoURL} alt="Rounded avatar"/> : ''}
-              <StatusBarDropDown />
+          <div className="lg:flex hidden justify-end ">
+              { user.isSignedIn ?
+                <>
+                  <img className="w-9 h-9 bg-zinc-100 rounded-full mr-4" src={user.photoURL} alt="Rounded avatar"/>
+                  <StatusBarDropDown />
+                </>
+                : ''
+              }
+
           </div>
       </div>
 )
