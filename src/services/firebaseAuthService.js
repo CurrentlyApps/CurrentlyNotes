@@ -10,6 +10,7 @@ import {logout, setUserData} from "../stores/Auth/authSlice";
 import store from "stores/store";
 import {logEvent} from "firebase/analytics";
 import {analytics} from "./firebase";
+import {setNote} from "../stores/Notes/notesSlice";
 
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
@@ -37,6 +38,7 @@ const authService = {
 
   signOut : () => {
     signOut(auth).then(() => {
+      store.dispatch(setNote(null))
       store.dispatch(logout());
     });
   },
