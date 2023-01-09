@@ -1,7 +1,6 @@
 import { TrashIcon, ShareIcon } from '@heroicons/react/24/solid'
 import { deleteNote } from 'services/firebase';
 import { Dropdown } from 'flowbite-react';
-import SharingModal from 'components/SharingModal/SharingModal';
 import PrivacyIcons from './PrivacyIcons';
 import { useNavigate, useParams } from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
@@ -42,7 +41,6 @@ export default function NoteListEntry(props) {
                   </Dropdown.Item>
               </Dropdown>
           </div>
-          <SharingModal />
       </div>
   )
 }

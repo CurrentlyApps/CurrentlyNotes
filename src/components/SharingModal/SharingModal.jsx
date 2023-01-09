@@ -52,42 +52,41 @@ export default function SharingModal() {
         }, 5000)
     } 
 
-    
-
     return (
-        <div>
-            <Modal show={true} onClose={onClose}>
-                <Modal.Header>
-                    Sharing Options
-                </Modal.Header>
-                <Modal.Body>
-                    <div className="flex justify-between" onChange={onPrivacyChange}>
-                        { radioButtonGroup1 }
+      <Modal
+        show={true}
+        onClose={onClose}
+        popup={true}
+        size={"md"}>
+        <Modal.Header/>
+        <Modal.Body>
+          <div className="space-y-6 px-3 sm:pb-6 lg:px-8 xl:pb-8">
+            <div className={"font-semibold"}>
+              Sharing Options
+            </div>
+              <div className="flex justify-between" onChange={onPrivacyChange}>
+                { radioButtonGroup1 }
+              </div>
+
+              {
+                note.privacy === "public" &&
+                <div className="my-5">
+                  <div className="flex flex-row">
+                    <Label htmlFor="shareLink">
+                      Share Link
+                    </Label>
+                    <div className="transition-all ml-auto text-sm text-green-500" hidden={copyConfirmHidden}>
+                      Link copied to clipboard
                     </div>
-
-                    {
-                        note.privacy === "public" &&
-                        <div className="my-5">
-                            <div className="flex flex-row">
-                                <Label htmlFor="shareLink">
-                                    Share Link
-                                </Label>
-                                <div className="transition-all ml-auto text-sm text-green-500" hidden={copyConfirmHidden}>
-                                    Link copied to clipboard
-                                </div>
-                            </div>
-                            <TextInput onClick={copyShareLinkToClipboard} value={shareableLink} readOnly={true} id="shareLink" />
-                        </div>
-                    }
-
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={onClose}>
-                        Close
-                    </Button>
-                </Modal.Footer>   
-
-            </Modal>
-        </div>
+                  </div>
+                  <TextInput onClick={copyShareLinkToClipboard} value={shareableLink} readOnly={true} id="shareLink" />
+                </div>
+              }
+              <Button onClick={onClose}>
+                Close
+              </Button>
+          </div>
+        </Modal.Body>
+      </Modal>
     )
 }
