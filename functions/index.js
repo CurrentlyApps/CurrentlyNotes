@@ -5,8 +5,8 @@ admin.initializeApp();
 
 exports.createUserDefaultData = functions.auth.user().onCreate((user) => {
   admin.database().ref(`notes/users/${user.uid}/notes`).set({
-    "note1": {
-      id: "default",
+    "welcome_note": {
+      id: "welcome_note",
       title: "Welcome to Currently Notes!",
       body: "This is a sample note. You can edit it by clicking on it." +
         " You can also delete it by clicking the trash can icon next to the" +
