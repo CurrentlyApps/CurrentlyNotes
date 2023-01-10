@@ -24,15 +24,25 @@ const authService = {
       displayName: user.displayName ? user.displayName : user.email,
       photoURL: user.photoURL ? user.photoURL : 'https://api.dicebear.com/5.x/avataaars-neutral/svg?seed=' + user.uid,
       email: user.email,
+      emailVerified: user.emailVerified,
       uid: user.uid
     }));
   },
 
+  async sendVerificationEmail(user, res, err){
+    sendEmailVerification(user).then(() => {
+      res();
+    }).catch((error) => {
+      err(error);
+    });
+  },
+
   createPasswordAccount : (email, password, res, err) => {
     createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
-      sendEmailVerification(userCredential.user);
-      authService.setUser(userCredential.user);
-      res();
+      authService.sendVerificationEmail(userCredential.user).then(() => {
+        res();
+        authService.setUser(userCredential.user);
+      });
     }).catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -65,6 +75,7 @@ const authService = {
       authService.setUser(userCredential.user);
       return true;
     }).catch((error) => {
+      console.log(JSON.parse(error));
       err(error);
     });
   },
