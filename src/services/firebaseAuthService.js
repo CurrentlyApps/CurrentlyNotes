@@ -75,7 +75,6 @@ const authService = {
       authService.setUser(userCredential.user);
       return true;
     }).catch((error) => {
-      console.log(JSON.parse(error));
       err(error);
     });
   },
