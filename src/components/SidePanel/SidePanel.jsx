@@ -14,7 +14,7 @@ export default function SidePanel() {
     }
 
     return (
-        <div className={`bg-zinc-200 relative transition-all duration-200 h-full ${sidebarExtended ? 'w-4/5 lg:w-1/5' : '-translate-x-96 w-0' }`}>
+        <div className={`bg-zinc-200 relative transition-all duration-300 drop-shadow-xl h-full ${sidebarExtended ? 'w-4/5 lg:w-1/5' : '-translate-x-96 w-0' }`}>
             <SidePanelProfile/>
             <div className='flex flex-row text-lg font-semibold px-4 pt-2 underline underline-offset-8 decoration-slate-800'>
                 Your Notes
