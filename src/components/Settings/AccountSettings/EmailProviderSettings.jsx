@@ -33,6 +33,18 @@ export default function GoogleProviderSettings() {
                 <QuestionMarkCircleIcon className={"h-5 my-auto ml-1"}/>
               </div>
             </Tooltip>
+            <div >
+              {
+                authUser.emailVerified ?
+                  <div className={"text-green-500"}>
+                    Email Verified
+                  </div>
+                  :
+                  <div className={"text-red-500"}>
+                    Email Not Verified
+                  </div>
+              }
+            </div>
           </div>
         </div>
         <div className={"flex flex-row ml-auto my-auto"}>
