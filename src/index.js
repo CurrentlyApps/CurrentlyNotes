@@ -13,11 +13,13 @@ import EditorNoNoteSelected from 'components/Editor/EditorNoNoteSelected';
 import EditorNote from 'components/Editor/EditorNote';
 import store from 'stores/store';
 import { Provider } from 'react-redux';
+import GlobalPopup from "./components/UI/GlobalPopup";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store} >
+    <GlobalPopup/>
     <Router>
       <Routes>
         <Route path="/" element={<Home />} >
