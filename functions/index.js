@@ -17,5 +17,7 @@ exports.createUserDefaultData = functions.auth.user().onCreate((user) => {
   return admin.database().ref(`notes/users/${user.uid}/profile`).set({
     displayName: user.displayName,
     email: user.email,
+    photoURL: user.photoURL,
+    emailVerified: false,
   });
 });
