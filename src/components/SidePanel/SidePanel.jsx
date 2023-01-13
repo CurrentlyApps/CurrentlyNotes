@@ -14,7 +14,9 @@ export default function SidePanel() {
     }
 
     return (
-        <div className={`bg-zinc-200 relative transition-all duration-300 drop-shadow-xl h-full ${sidebarExtended ? 'w-4/5 lg:w-1/5' : '-translate-x-96 w-0' }`}>
+        <div className={`
+            flex flex-col
+            bg-zinc-200 relative transition-all duration-300 drop-shadow-xl h-full ${sidebarExtended ? 'w-4/5 lg:w-1/5' : '-translate-x-96 w-0' }`}>
             <SidePanelProfile/>
             <div className='flex flex-row text-lg font-semibold px-4 pt-2 underline underline-offset-8 decoration-slate-800'>
                 Your Notes
@@ -23,7 +25,9 @@ export default function SidePanel() {
                 </div>
             </div>
             <hr />
-            { notes ? NoteEntryList(notes) : null }
+            <div className={"overflow-y-auto grow pb-5"}>
+                { notes ? NoteEntryList(notes) : null }
+            </div>
         </div>
     )
 }
