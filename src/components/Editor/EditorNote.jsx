@@ -68,7 +68,7 @@ export default function EditorNote() {
     }
 
     return (
-        <div className={`flex lg:flex-row flex-col transition-all h-full overflow-hidden w-full`}>
+        <div className={`flex lg:flex-row p-5 py-10 flex-col transition-all h-full overflow-hidden w-full`}>
             <div className={`flex flex-col w-full px-4 lg:h-full h-1/2 resize-y  ${showPreview ? 'lg:w-1/2 w-full' : 'lg:mx-auto lg:w-2/3'}`}>
                 <div className="font-light px-4">
                     <div className={"flex flex-row"}>
