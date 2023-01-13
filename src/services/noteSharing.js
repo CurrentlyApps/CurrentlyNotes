@@ -4,7 +4,7 @@ import store from "../stores/store";
 
 export const setNotePrivacy = function(note, privacy) {
     let user = store.getState().auth;
-    const notePrivacyRef = ref(db, `notes/users/${user.uid}/notes/${note.id}/privacy`);
+    const notePrivacyRef = ref(db, `notes_meta/${user.uid}/${note.id}/privacy`);
     set(notePrivacyRef, privacy)
 }
 
