@@ -44,7 +44,7 @@ export default function StatusBarNoteTitle () {
             type={"text"}
             hidden={!editTitle}
             ref={inputRef}
-            className={"appearance-none bg-zinc-900 text-sm p-0"}
+            className={"appearance-none bg-zinc-900 text-md px-5 py-0"}
             value={ currentNote.title }
             onChange={ updateTitle }
             onBlur={ () => { setEditTitle(false) } }
