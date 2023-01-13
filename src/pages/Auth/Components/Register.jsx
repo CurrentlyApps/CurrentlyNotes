@@ -62,8 +62,9 @@ export default function Register() {
       <div>
         <div className="mb-2 block">
           {
-            password !== verifyPassword &&
+            password !== verifyPassword && verifyPassword.length > 0 ?
             <p className="text-red-500 text-sm">Passwords do not match</p>
+              : null
           }
 
           <Label
