@@ -14,6 +14,8 @@ import {
 import {logout, setUserData} from "stores/Auth/authSlice";
 import store from "stores/store";
 import {resetState } from "stores/Notes/notesSlice";
+import {child, get, ref, set} from "firebase/database";
+import {db} from "./firebase";
 
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
@@ -127,6 +129,19 @@ const authService = {
             console.log(error)
           }
         );
+      }
+    });
+  },
+
+  handleVerifiedEmail : () => {
+    const user = auth.currentUser;
+    const dbRef = ref(db);
+    get(child(dbRef, `/users/${user.uid}/isVerified`)).then((snapshot) => {
+      let emailVerified = snapshot.val();
+      if (emailVerified != null) {
+        if (!emailVerified && user.emailVerified) {
+          set(ref(db, `/users/${user.uid}/isVerified`), true);
+        }
       }
     });
   },
