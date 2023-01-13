@@ -56,7 +56,6 @@ export default function NoteList() {
 function NoteEntryList(list) {
   let listElement = [];
   Object.values(list).forEach(note => {
-    console.log(note)
     listElement.push(
       <NoteListEntry key={note.id} note={note} />
     )

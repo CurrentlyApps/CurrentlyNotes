@@ -44,7 +44,6 @@ const firebaseNotesService = {
     const noteRef = ref(db, `/notes_content/${userId}/${noteId}`);
     onValue(noteRef, (snapshot) => {
       let data = snapshot.val();
-      console.log(data)
       if( data ) {
         store.dispatch(setNoteContent(data));
       } else {
@@ -72,12 +71,11 @@ const firebaseNotesService = {
   },
 
   deleteNote : (note) => {
-    const noteRef = ref(db, `/notes/users/${note.user_id}/notes/${note.id}`);
+    const noteRef = ref(db, `/notes_content/${note.user_id}/${note.id}`);
+    remove(noteRef);
 
-    store.dispatch(setIsSavingData(true));
-    remove(noteRef).then(() => {
-      store.dispatch(setIsSavingData(false));
-    });
+    const noteMetaRef = ref(db, `/notes_meta/${note.user_id}/${note.id}`);
+    remove(noteMetaRef);
   },
 
   createNote : () => {
