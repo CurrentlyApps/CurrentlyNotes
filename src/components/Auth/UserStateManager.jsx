@@ -6,7 +6,7 @@ import {logout} from "stores/Auth/authSlice";
 import {useDispatch} from "react-redux";
 import {setNotes} from "stores/Notes/notesSlice";
 import authService from "services/firebaseAuthService";
-import {openModal} from "../../stores/UI/uiModals";
+import {openModal} from "stores/UI/uiModals";
 export default function UserStateManager() {
   const dispatch = useDispatch();
 

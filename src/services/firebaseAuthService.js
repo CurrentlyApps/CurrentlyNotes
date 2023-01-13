@@ -22,7 +22,7 @@ const authService = {
   setUser : (user) => {
     store.dispatch(setUserData({
       displayName: user.displayName ? user.displayName : user.email,
-      photoURL: user.photoURL ? user.photoURL : 'https://api.dicebear.com/5.x/avataaars-neutral/svg?seed=' + user.uid,
+      photoURL: user.photoURL ? user.photoURL : 'https://api.dicebear.com/5.x/bottts/svg?seed=' + user.uid,
       email: user.email,
       emailVerified: user.emailVerified,
       uid: user.uid
