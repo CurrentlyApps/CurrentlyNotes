@@ -29,8 +29,8 @@ export default function About() {
         const note = snapshot.val()
         setLoadingNote(false)
         setNoteState(note)
-    }).catch( (err) => {
-      navigate("/page/error");
+    }).catch( () => {
+      navigate("/404");
     });
 
     get(authorRef).then( (snapshot) => {

@@ -1,8 +1,7 @@
 import {useSelector} from "react-redux";
-import SharingModal from "../SharingModal/SharingModal";
-import AccountSettings from "../Settings/AccountSettings/AccountSettings";
-import AuthPopUp from "../Auth/SignIn/AuthPopUp";
-import RequireVerificationModal from "../Auth/RequireVerificationModal";
+import SharingModal from "pages/Home/Components/Modals/Sharing/SharingModal";
+import AccountSettings from "./Settings/AccountSettings/AccountSettings";
+import RequireVerificationModal from "./RequireVerification/RequireVerificationModal";
 
 export default function ModalManager() {
   const currentModal = useSelector((state) => state.uiModal.modal);
@@ -14,8 +13,6 @@ export default function ModalManager() {
     return <SharingModal />;
   } else if (currentModal === "AccountSettings") {
     return <AccountSettings />;
-  } else if (currentModal === "Login") {
-    return <AuthPopUp />;
   } else if (currentModal === "RequireVerification") {
     return <RequireVerificationModal />;
   }

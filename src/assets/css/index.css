@@ -1,5 +1,7 @@
 @import "cn_scrollbars.css";
 @import "cn_modal.css";
+@import "cn_sidebar.css";
+@import "cn_common.css";
 
 @tailwind base;
 @tailwind components;

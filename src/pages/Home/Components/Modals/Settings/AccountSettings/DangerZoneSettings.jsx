@@ -1,6 +1,6 @@
 import {Button, Modal, Spinner} from "flowbite-react";
 import {useState} from "react";
-import authService from "../../../services/firebaseAuthService";
+import authService from "services/firebaseAuthService";
 
 
 export default function DangerZoneSettings () {

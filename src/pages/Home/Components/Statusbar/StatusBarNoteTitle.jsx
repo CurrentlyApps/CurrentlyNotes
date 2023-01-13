@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState} from "react";
-import {updateNote} from "../../services/firebase";
+import {updateNote} from "../../../../services/firebase";
 import {useParams} from "react-router-dom";
 import {PencilSquareIcon} from "@heroicons/react/24/outline";
 import {useSelector} from "react-redux";

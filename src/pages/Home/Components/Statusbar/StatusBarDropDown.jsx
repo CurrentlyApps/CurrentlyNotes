@@ -1,9 +1,9 @@
 import { Dropdown } from "flowbite-react";
-import LoginOrProfile from "components/Auth/LoginOrProfile";
+import LoginOrProfile from "./LoginOrProfile";
 import {ArrowRightOnRectangleIcon, Cog6ToothIcon, HomeModernIcon, UserIcon} from "@heroicons/react/24/outline";
 import {useDispatch, useSelector} from "react-redux";
-import {openModal} from "../../stores/UI/uiModals";
-import authService from "../../services/firebaseAuthService";
+import {openModal} from "stores/UI/uiModals";
+import authService from "services/firebaseAuthService";
 export default function StatusBarDropDown() {
     const user = useSelector(state => state.auth);
     const dispatch = useDispatch()

@@ -1,6 +1,6 @@
 import {ArrowLeftOnRectangleIcon, HomeIcon} from "@heroicons/react/24/solid";
 import {useSelector} from "react-redux";
-import authService from "../../services/firebaseAuthService";
+import authService from "services/firebaseAuthService";
 export default function SidePanelProfile() {
 
   const user = useSelector((state) => state.auth);

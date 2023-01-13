@@ -1,7 +1,7 @@
 import {Button, Label, Modal, Spinner, TextInput} from "flowbite-react";
 import {useState} from "react";
 import {getAuth} from "firebase/auth";
-import authService from "../../../services/firebaseAuthService";
+import authService from "services/firebaseAuthService";
 
 
 export default function EmailProviderSettingsAddPassword ({isVisible, setIsVisible}) {

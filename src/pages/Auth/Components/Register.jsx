@@ -1,18 +1,22 @@
 import {Button, Label, Spinner, TextInput} from "flowbite-react";
 import {useState} from "react";
 import authService from "services/firebaseAuthService";
+import {redirect, useNavigate} from "react-router-dom";
 
-export default function Register({setIsLoginScreen}) {
+export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [verifyPassword, setVerifyPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  let navigate = useNavigate();
+  document.title = "Register - Currently Notes";
   const createPasswordAccount = () => {
     setIsLoading(true);
     authService.createPasswordAccount(email, password, ()=> {
       setIsLoading(false);
+      return redirect("/");
     }, (error) => {
       setError(error.message);
       setIsLoading(false);
@@ -87,7 +91,9 @@ export default function Register({setIsLoginScreen}) {
           }
         </Button>
       </div>
-      <button className="w-full text-center text-sm text-blue-700 hover:underline dark:text-blue-500" onClick={() => setIsLoginScreen(true)}>
+      <button
+        className="w-full text-center text-sm text-blue-700 hover:underline dark:text-blue-500"
+        onClick={() => navigate('/auth/login')}>
         Already have an account? Sign in here!
       </button>
     </>

@@ -1,0 +1,11 @@
+.cn_sidebar {
+    @apply flex flex-col bg-zinc-100;
+    @apply w-full h-full;
+    @apply drop-shadow-xl;
+    @apply transition-all;
+    @apply fixed;
+    @apply top-0 left-0;
+    @apply overflow-x-hidden;
+    @apply z-10;
+    @apply whitespace-nowrap;
+}

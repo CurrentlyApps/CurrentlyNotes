@@ -1,8 +1,9 @@
 import {useState} from "react";
 import {Button, Checkbox, Label, Spinner, TextInput} from "flowbite-react";
 import authService from "services/firebaseAuthService";
+import {redirect, useNavigate} from "react-router-dom";
 
-export default function SignIn({setIsLoginScreen}) {
+export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -10,10 +11,14 @@ export default function SignIn({setIsLoginScreen}) {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingGoogle, setIsLoadingGoogle] = useState(false);
+
+  let navigate = useNavigate();
+  document.title = "Login - Currently Notes";
   const signInWithPasswordClick = () => {
     setIsLoading(true);
     authService.signInWithPassword(email, password, () => {
       setIsLoading(false);
+      return redirect("/");
     }, (error) => {
       if (
         error.code === 'auth/wrong-password'
@@ -32,8 +37,8 @@ export default function SignIn({setIsLoginScreen}) {
     setIsLoadingGoogle(true);
     authService.signInWithGoogle(() => {
       setIsLoadingGoogle(false);
+      return redirect("/")
     }, (error) => {
-      console.log(error)
       setError(error.code);
       setIsLoadingGoogle(false);
     });
@@ -123,7 +128,9 @@ export default function SignIn({setIsLoginScreen}) {
           }
         </div>
       </Button>
-      <button className="w-full text-center text-sm text-blue-700 hover:underline dark:text-blue-500" onClick={() => setIsLoginScreen(false)}>
+      <button
+        className="w-full text-center text-sm text-blue-700 hover:underline dark:text-blue-500"
+        onClick={() => navigate('/auth/register')}>
         Need an account? Register here!
       </button>
     </>

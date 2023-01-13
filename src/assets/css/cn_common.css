@@ -1,0 +1,3 @@
+.cn_title {
+    @apply lg:font-extrabold tracking-widest uppercase lg:text-xl;
+}

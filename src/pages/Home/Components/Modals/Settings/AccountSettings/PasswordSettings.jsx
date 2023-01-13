@@ -1,6 +1,6 @@
 import {getAuth} from "firebase/auth";
 import {Button, Spinner} from "flowbite-react";
-import authService from "../../../services/firebaseAuthService";
+import authService from "services/firebaseAuthService";
 import {useState} from "react";
 
 export default function PasswordSettings ()  {

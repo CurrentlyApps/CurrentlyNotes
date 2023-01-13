@@ -3,7 +3,7 @@ import { set, getDatabase, ref, push, remove } from "firebase/database";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import store from "stores/store";
 
-const firebaseConfig = {
+export const firebaseConfig = {
     apiKey: process.env.REACT_APP_apiKey,
     authDomain: process.env.REACT_APP_authDomain,
     databaseURL: process.env.REACT_APP_databaseURL,
