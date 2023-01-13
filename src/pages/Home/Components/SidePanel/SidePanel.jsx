@@ -1,9 +1,9 @@
 import {Bars3Icon, DocumentPlusIcon} from '@heroicons/react/24/solid'
-import { newNoteClicked} from 'services/firebase';
 import {useDispatch, useSelector} from "react-redux";
 import SidePanelProfile from "./Components/SidePanelProfile";
 import {toggleSidebar} from "stores/UI/uiSlice";
 import NoteList from "./Components/NoteList";
+import firebaseNotesService from "services/firebaseNotesService";
 
 export default function SidePanel() {
 
@@ -33,7 +33,10 @@ export default function SidePanel() {
       <div className='flex flex-row text-lg block font-semibold pb-4 px-4'>
         Your Notes
         <div className='ml-auto mt-1 transition-all'>
-          <DocumentPlusIcon className='w-4 hover:text-zinc-700 cursor-pointer ' onClick={() => newNoteClicked()}  />
+          <DocumentPlusIcon
+            className='w-4 hover:text-zinc-700 cursor-pointer '
+            onClick={() => firebaseNotesService.createNote()}
+          />
         </div>
       </div>
       <NoteList/>

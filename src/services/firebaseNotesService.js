@@ -1,4 +1,13 @@
-import {onValue, ref, remove, set} from "firebase/database";
+import {
+  onValue,
+  update,
+  ref,
+  remove,
+  set,
+  serverTimestamp,
+  push,
+  child
+} from "firebase/database";
 import {db} from "./firebase";
 import {setNoteContent, setNoteMeta, setNotes} from "stores/Notes/notesSlice";
 import store from "stores/store";
@@ -67,6 +76,38 @@ const firebaseNotesService = {
 
     store.dispatch(setIsSavingData(true));
     remove(noteRef).then(() => {
+      store.dispatch(setIsSavingData(false));
+    });
+  },
+
+  createNote : () => {
+    let user = store.getState().auth;
+    const newNoteKey = push(child(ref(db), `notes_meta/${user.uid}`)).key;
+    const updates = {}
+
+    updates[`notes_meta/${user.uid}/${newNoteKey}`] = {
+      id: newNoteKey,
+      user_id: user.uid,
+      title: "New Note",
+      created_at: serverTimestamp(),
+      updated_at: serverTimestamp(),
+      privacy: "private",
+    }
+
+    updates[`notes_content/${user.uid}/${newNoteKey}`] = {
+      id: newNoteKey,
+      user_id: user.uid,
+      body: "This is a sample note. You can edit it by clicking on it." +
+        " You can also delete it by clicking the trash can icon next to the" +
+        " note in the sidebar. To create a new note, just hit the new note " +
+        "icon at the top of the sidebar! For help in formatting, check out " +
+        "the link above.",
+    }
+
+
+
+    store.dispatch(setIsSavingData(true));
+    update(ref(db), updates).then(() => {
       store.dispatch(setIsSavingData(false));
     });
   }
