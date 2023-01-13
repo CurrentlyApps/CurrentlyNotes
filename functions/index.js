@@ -2,22 +2,47 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 admin.initializeApp();
 
+exports.onDeleteUserData = functions.auth.user().onDelete((user) => {
+  admin.database().ref(`/notes_meta/${user.uid}`).remove();
+  admin.database().ref(`/notes_content/${user.uid}`).remove();
+  return admin.database().ref(`/users/${user.uid}`).remove();
+});
 
-exports.createUserDefaultData = functions.auth.user().onCreate((user) => {
-  admin.database().ref(`notes/users/${user.uid}/notes`).set({
-    "welcome_note": {
-      id: "welcome_note",
-      title: "Welcome to Currently Notes!",
-      body: "This is a sample note. You can edit it by clicking on it." +
-        " You can also delete it by clicking the trash can icon next to the" +
-        " note in the sidebar. To create a new note, just hit the new note " +
-        "icon at the top of the sidebar!.",
+exports.createUserDefaultDataV2 = functions.auth.user().onCreate((user) => {
+  // Get user provider
+  const provider = user.providerData[0].providerId;
+  let isVerified = true;
+  if (provider === "password") {
+    isVerified = false;
+  }
+
+  admin.database().ref("/app_config").get().then((snapshot) => {
+    const data = snapshot.val();
+    admin.database().ref(`users/${user.uid}`).set({
+      email: user.email,
+      photoURL: user.photoURL ?
+        user.photoURL :
+        data.urlPhotoGeneratorLink + user.uid,
+      isVerified: isVerified,
+    });
+  });
+
+  admin.database().ref(`notes_meta/${user.uid}`).set({
+    "0": {
+      id: "0",
+      user_id: user.uid,
+      title: "Welcome to Currently Notes",
+      created_at: admin.database.ServerValue.TIMESTAMP,
+      updated_at: admin.database.ServerValue.TIMESTAMP,
+      privacy: "private",
     },
   });
-  return admin.database().ref(`notes/users/${user.uid}/profile`).set({
-    displayName: user.displayName,
-    email: user.email,
-    photoURL: user.photoURL,
-    emailVerified: false,
+
+  return admin.database().ref(`notes_content/${user.uid}`).set({
+    "0": {
+      id: "0",
+      body: "This is your first note. You can edit it by clicking on it.",
+      user_id: user.uid,
+    },
   });
 });
