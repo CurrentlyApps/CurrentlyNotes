@@ -28,11 +28,6 @@ export default function UserStateManager() {
           }
         });
 
-        // const notesRef = ref(db, `/notes/users/${user.uid}/notes`);
-        // onValue(notesRef, (snapshot) => {
-        //   let data = snapshot.val();
-        //   dispatch(setNotes(data));
-        // });
       } else {
         dispatch(logout());
       }

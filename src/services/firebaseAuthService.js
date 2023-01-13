@@ -11,9 +11,9 @@ import {
   sendPasswordResetEmail,
   unlink
 } from "firebase/auth";
-import {logout, setUserData} from "../stores/Auth/authSlice";
+import {logout, setUserData} from "stores/Auth/authSlice";
 import store from "stores/store";
-import {setNote, setNotes} from "../stores/Notes/notesSlice";
+import {resetState } from "stores/Notes/notesSlice";
 
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
@@ -53,8 +53,7 @@ const authService = {
   signOut : () => {
     signOut(auth).then(() => {
       document.title = "Currently Notes";
-      store.dispatch(setNotes([]));
-      store.dispatch(setNote(null))
+      store.dispatch(resetState());
       store.dispatch(logout());
     });
   },
