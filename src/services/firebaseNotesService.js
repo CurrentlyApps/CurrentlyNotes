@@ -95,11 +95,7 @@ const firebaseNotesService = {
     updates[`notes_content/${user.uid}/${newNoteKey}`] = {
       id: newNoteKey,
       user_id: user.uid,
-      body: "This is a sample note. You can edit it by clicking on it." +
-        " You can also delete it by clicking the trash can icon next to the" +
-        " note in the sidebar. To create a new note, just hit the new note " +
-        "icon at the top of the sidebar! For help in formatting, check out " +
-        "the link above.",
+      body: "Click here to edit",
     }
 
 
