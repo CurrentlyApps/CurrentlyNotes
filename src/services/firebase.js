@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { set, getDatabase, ref, push, remove } from "firebase/database";
+import { set, getDatabase, ref, push } from "firebase/database";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import store from "stores/store";
 
@@ -18,12 +18,6 @@ export const app = initializeApp(firebaseConfig);
 export const analytics = getAnalytics(app);
 export const db = getDatabase(app);
 
-export const deleteNote = function(noteId) {
-    let user = store.getState().auth;
-    const notesRef = ref(db, `/notes/users/${user.uid}/notes/${noteId}`);
-    remove(notesRef)
-    logEvent(analytics, 'note_deleted');
-}
 
 export const newNoteClicked = function() {
     let user = store.getState().auth;
@@ -37,9 +31,3 @@ export const newNoteClicked = function() {
         privacy: "private"
     })
 }
-
-export const updateNote = function(note, user_id){
-    const notesRef = ref(db, `notes/users/${user_id}/notes/${note.id}`);
-    set(notesRef, note)
-  }
-

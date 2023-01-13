@@ -4,6 +4,8 @@ export const notesSlice = createSlice({
   name: "notes",
   initialState: {
     notes: [],
+    note_meta: {},
+    note_content: {},
     currentNote: null,
   },
   reducers: {
@@ -13,9 +15,17 @@ export const notesSlice = createSlice({
 
     setNote: (state, action) => {
       state.currentNote = action.payload;
+    },
+
+    setNoteMeta: (state, action) => {
+      state.note_meta = action.payload;
+    },
+
+    setNoteContent: (state, action) => {
+      state.note_content = action.payload;
     }
   }
 });
 
-export const {setNotes, setNote} = notesSlice.actions;
+export const {setNotes, setNote, setNoteMeta, setNoteContent} = notesSlice.actions;
 export default notesSlice.reducer;

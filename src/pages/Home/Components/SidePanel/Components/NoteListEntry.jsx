@@ -1,14 +1,14 @@
 import { TrashIcon, ShareIcon } from '@heroicons/react/24/solid'
-import { deleteNote } from 'services/firebase';
 import { Dropdown } from 'flowbite-react';
 import PrivacyIcons from './PrivacyIcons';
 import { useNavigate, useParams } from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import {openModal, setModalData} from "stores/UI/uiModals";
+import firebaseNotesService from "services/firebaseNotesService";
 
 export default function NoteListEntry(props) {
   const { post_id } = useParams();
-  let note = props.note
+  let note_meta = props.note
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const user = useSelector(state => state.auth);
@@ -17,23 +17,27 @@ export default function NoteListEntry(props) {
     dispatch(openModal('ShareOptions'))
   }
 
+  const entryClick = () => {
+    navigate(`/edit/${user.uid}/${note_meta.id}`)
+  }
+
   return (
-      <div key={note.id} className={`flex flex-row  hover:bg-zinc-300 ${post_id === note.id ? 'font-bold bg-zinc-400 text-slate-100':'font-normal text-zinc-700'}`}>
+      <div key={note_meta.id} className={`flex flex-row  hover:bg-zinc-300 ${post_id === note_meta.id ? 'font-bold bg-zinc-400 text-slate-100':'font-normal text-zinc-700'}`}>
           <div
-          onClick={() => navigate(`/edit/${user.uid}/${note.id}`) }
+          onClick={() => entryClick() }
           className={`px-4 py-1 truncate overflow-hidden text-sm w-full cursor-pointer font-mono tracking-tighter `}>
-              { note.title !== "" ? note.title : "Untitled" }
+              { note_meta.title !== "" ? note_meta.title : "Untitled" }
           </div>
-          <PrivacyIcons note={note} />
+          <PrivacyIcons note={note_meta} />
           <div className='mr-4 ml-auto my-auto'>
               <Dropdown label="" inline={true}>
-                  <Dropdown.Item onClick={ () => openShareModal(note.id)}>
+                  <Dropdown.Item onClick={ () => openShareModal(note_meta.id)}>
                       <div className='mr-auto'>
                           Share
                       </div>
                       <ShareIcon className='w-4 ml-2 cursor-pointer hover:text-zinc-700'/>
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={ () => deleteNote(note.id) }>
+                  <Dropdown.Item onClick={ () => firebaseNotesService.deleteNote(note_meta) }>
                       <div className='mr-auto'>
                           Delete
                       </div>

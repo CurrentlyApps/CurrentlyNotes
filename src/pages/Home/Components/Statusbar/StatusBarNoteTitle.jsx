@@ -1,18 +1,14 @@
 import { useEffect, useRef, useState} from "react";
-import {updateNote} from "../../../../services/firebase";
-import {useParams} from "react-router-dom";
 import {PencilSquareIcon} from "@heroicons/react/24/outline";
 import {useSelector} from "react-redux";
+import firebaseNotesService from "services/firebaseNotesService";
 
 export default function StatusBarNoteTitle () {
   const inputRef = useRef(null);
-
-  const { user_id } = useParams();
   const [editTitle, setEditTitle] = useState(false);
 
   const updateTitle = function(event){
-    let tempNote = { ...currentNote, title: event.target.value }
-    updateNote(tempNote, user_id)
+    firebaseNotesService.updateNoteMeta({ ...note_meta, title: event.target.value })
   }
 
   useEffect(() => {
@@ -21,9 +17,9 @@ export default function StatusBarNoteTitle () {
     }
   } , [editTitle]);
 
-  const currentNote = useSelector(state => state.notes.currentNote)
+  const note_meta = useSelector(state => state.notes.note_meta)
 
-  if (currentNote == null) {
+  if (note_meta == null) {
     return null;
   }
 
@@ -33,7 +29,7 @@ export default function StatusBarNoteTitle () {
       <div hidden={editTitle}
         className="duration-75 transition-all truncate ... hover:underline underline-offset-8 px-4  cursor-pointer text-zinc-100 my-auto flex flex-r0w"
         onClick={ () => setEditTitle(true)} >
-        { currentNote.title }
+        { note_meta.title }
         <PencilSquareIcon className={"w-3 my-auto ml-2 text-zinc-300"} />
       </div>
     );
@@ -45,7 +41,7 @@ export default function StatusBarNoteTitle () {
             hidden={!editTitle}
             ref={inputRef}
             className={"appearance-none bg-zinc-900 text-md px-5 py-0"}
-            value={ currentNote.title }
+            value={ note_meta.title }
             onChange={ updateTitle }
             onBlur={ () => { setEditTitle(false) } }
             placeholder="Title"
