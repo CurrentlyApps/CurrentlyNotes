@@ -1,18 +1,24 @@
 import {  useState } from "react"
 import parse from 'html-react-parser';
-import Showdown from "showdown";
 import { useSelector} from "react-redux";
 import firebaseNotesService from "../../services/firebaseNotesService";
 import {Spinner} from "flowbite-react";
+import 'highlight.js/styles/github-dark-dimmed.css';
+import showdownHighlight from "showdown-highlight";
+import Showdown from "showdown";
+
+const converter = new Showdown.Converter({
+  'tasklists': true,
+  'smoothLivePreview': true,
+  'smartIndentationFix': true,
+  'emoji': true,
+  'extensions': [showdownHighlight({ pre: true })]
+});
 
 export default function EditorNote() {
-  const converter = new Showdown.Converter({
-    'tasklists': true,
-    'smoothLivePreview': true,
-    'smartIndentationFix': true,
-    'emoji': true,
-    'moreStyling': true
-  })
+
+
+
   converter.setFlavor('github');
   const [showPreview, setShowPreview] = useState(true)
   const updateBody = function(event) {
@@ -36,6 +42,7 @@ export default function EditorNote() {
   }
 
   const note_content = useSelector(state => state.notes.note_content);
+  const note_meta = useSelector(state => state.notes.note_meta);
 
   if (!note_content.id) {
     return (
@@ -49,9 +56,10 @@ export default function EditorNote() {
   }
 
   return (
-    <div className={`flex lg:flex-row p-5 py-10 flex-col transition-all h-full overflow-hidden w-full`}>
-      <div className={`flex flex-col w-full px-4 lg:h-full h-1/2 resize-y  ${showPreview ? 'lg:w-1/2 w-full' : 'lg:mx-auto lg:w-2/3'}`}>
-        <div className="font-light flex flex-row px-4">
+    <div className={`flex md:flex-row flex-col md:px-5 px-2 md:pt-10 transition-all grow overflow-hidden `}>
+      <div className={`md:px-4 flex flex-col w-full md:w-1/2  grow md:grow-0  ${showPreview ? 'md:w-1/2 w-full ' : 'md:mx-auto md:w-2/3'}`}>
+
+        <div className="font-light flex flex-row grow pb-5">
           <button onClick={() => setShowPreview((prevState) => {return !prevState })} className="text-zinc-700 hover:text-zinc-600">
             Toggle Preview
           </button>
@@ -66,7 +74,7 @@ export default function EditorNote() {
 
         <textarea
           onKeyDown={ handleTab }
-          className="h-full border-none outline-none focus:ring-0 overflow-auto px-4 scrollbar_thin"
+          className="h-full border-none outline-none focus:ring-0 overflow-auto px-4 scrollbar_thin pb-40"
           value={ note_content.body }
           onChange={ updateBody }
           placeholder="Insert Text Here"
@@ -75,15 +83,14 @@ export default function EditorNote() {
       {
         showPreview === true
           ?
-          <div className={`transition-all flex flex-col lg:w-1/2 lg:h-full h-1/2`}>
-            <div className={`font-light w-full px-2`}>
+          <div className={`transition-all  md:px-4 flex flex-col md:w-1/2 h-1/2 md:h-full h-1/2`}>
+            <div className={`text-zinc-600 pb-5`}>
               Preview
-              <hr />
             </div>
 
-            <div className={`h-full overflow-y-auto scrollbar_thin px-2`}>
-              <div className="text-xl">
-                { note_content.title }
+            <div className={`h-full overflow-y-auto scrollbar_thin pb-40`}>
+              <div className="text-xl font-semibold">
+                { note_meta.title }
               </div>
               <div className={`prose prose-stone`} >
                 {
