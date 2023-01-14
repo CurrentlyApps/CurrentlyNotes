@@ -25,6 +25,12 @@ export default function NoteListEntry(props) {
       dispatch(toggleSidebar(false));
     }
   }
+  const handleDelete = () => {
+
+    firebaseNotesService.deleteNote(note_meta.id)
+    navigate("/");
+
+  }
 
   return (
       <div key={note_meta.id} className={`flex flex-row  hover:bg-zinc-300 ${post_id === note_meta.id ? 'font-bold bg-zinc-400 text-slate-100':'font-normal text-zinc-700'}`}>
@@ -42,7 +48,7 @@ export default function NoteListEntry(props) {
                       </div>
                       <ShareIcon className='w-4 ml-2 cursor-pointer hover:text-zinc-700'/>
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={ () => firebaseNotesService.deleteNote(note_meta) }>
+                  <Dropdown.Item onClick={ () => handleDelete() }>
                       <div className='mr-auto'>
                           Delete
                       </div>

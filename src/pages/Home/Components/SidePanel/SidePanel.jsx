@@ -43,7 +43,6 @@ export default function SidePanel() {
         </div>
       </div>
       <NoteList/>
-
     </div>
     )
 }
