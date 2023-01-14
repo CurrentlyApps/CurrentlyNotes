@@ -85,7 +85,7 @@ export default function EditorNote() {
               <div className="text-xl">
                 { note_content.title }
               </div>
-              <div className={`is_markdown`} >
+              <div className={`prose prose-stone`} >
                 {
                   parse(converter.makeHtml(note_content.body))
                 }
