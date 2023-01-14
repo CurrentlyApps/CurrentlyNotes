@@ -9,7 +9,8 @@ export const globalPopUpSlice = createSlice({
   reducers: {
 
     addPopup: (state, action) => {
-      state.popups[action.payload.id] = action.payload;
+      let key = Object.keys(state.popups).length;
+      state.popups[key] = action.payload;
     },
 
     removePopup: (state, action) => {
