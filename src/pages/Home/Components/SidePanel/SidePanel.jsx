@@ -17,6 +17,10 @@ export default function SidePanel() {
     const user = getAuth().currentUser;
     const newNoteKey = firebaseNotesService.createNote();
     navigate(`/edit/${user.uid}/${newNoteKey}`);
+    let mediaQuery = window.matchMedia('(max-width: 768px)');
+    if (mediaQuery.matches) {
+      dispatch(toggleSidebar(false));
+    }
   }
 
   return (
