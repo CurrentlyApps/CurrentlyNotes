@@ -9,12 +9,6 @@ export default function SidePanel() {
 
   const sidebarExtended = useSelector((state) => state.ui.sidebarExtended)
   const dispatch = useDispatch()
-  const user = useSelector((state) => state.auth)
-  if (!user.isSignedIn) {
-      return null;
-  }
-
-
 
   return (
     <div className={`cn_sidebar ${sidebarExtended ? 'md:w-96 p-4' : '-transform-x-full  w-0 px-0'}`}>
