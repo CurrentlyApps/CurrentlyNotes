@@ -4,6 +4,7 @@ import uiModalReducer from "./UI/uiModals";
 import authReducer from "./Auth/authSlice";
 import notesReducer from "./Notes/notesSlice";
 import globalPopUpSliceReducer from "./UI/globalPopupSlice";
+import firebaseReducer from "./Auth/firebaseSlice";
 
 export default configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export default configureStore({
     auth: authReducer,
     notes: notesReducer,
     globalPopup: globalPopUpSliceReducer,
+    firebase: firebaseReducer
   },
 });

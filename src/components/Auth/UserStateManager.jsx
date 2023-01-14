@@ -5,12 +5,14 @@ import {useDispatch} from "react-redux";
 import authService from "services/firebaseAuthService";
 import {openModal} from "stores/UI/uiModals";
 import firebaseAuthService from "services/firebaseAuthService";
+import firebaseGeneralService from "../../services/firebaseGeneralService";
 export default function UserStateManager() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     getAuth().onAuthStateChanged(function(user) {
       if( user ) {
+        firebaseGeneralService.detectOnlineStatus();
         authService.setUser(user);
 
         if (!user.emailVerified) {
@@ -26,6 +28,4 @@ export default function UserStateManager() {
       }
     });
   }, [dispatch]);
-
-
 }

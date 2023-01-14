@@ -11,6 +11,9 @@ export default function Statusbar() {
 
   const dispatch = useDispatch()
   const user = useSelector(state => state.auth);
+
+  const isOnline = useSelector(state => state.firebase.isOnline);
+
   return (
       <div className="w-full text-zinc-200 bg-zinc-900 lg:px-6 px-2 py-2 flex lg:justify-between drop-shadow-xl">
 
@@ -31,7 +34,7 @@ export default function Statusbar() {
           <div className="lg:flex hidden justify-end w-1/3">
               { user.isSignedIn ?
                 <>
-                  <img className="w-9 h-9 bg-zinc-100 rounded-full mr-4" src={user.photoURL} alt="Rounded avatar"/>
+                  <img className={`w-9 h-9 bg-zinc-100 rounded-full border-2 mr-4 ${isOnline ? 'border-2 border-zinc-100' : 'border-4 border-red-500'}`} src={user.photoURL} alt="Rounded avatar"/>
                   <StatusBarDropDown />
                 </>
                 : ''
