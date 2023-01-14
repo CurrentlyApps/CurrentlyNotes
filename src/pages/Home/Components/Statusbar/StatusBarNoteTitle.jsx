@@ -29,7 +29,11 @@ export default function StatusBarNoteTitle () {
       <div hidden={editTitle}
         className="duration-75 transition-all truncate ... hover:underline underline-offset-8 px-4  cursor-pointer text-zinc-100 my-auto flex flex-r0w"
         onClick={ () => setEditTitle(true)} >
-        { note_meta.title }
+        { note_meta.title === "" ?
+          "Untitled"
+          :
+          note_meta.title
+        }
         <PencilSquareIcon className={"w-3 my-auto ml-2 text-zinc-300"} />
       </div>
     );
