@@ -4,11 +4,20 @@ import SidePanelProfile from "./Components/SidePanelProfile";
 import {toggleSidebar} from "stores/UI/uiSlice";
 import NoteList from "./Components/NoteList";
 import firebaseNotesService from "services/firebaseNotesService";
+import {getAuth} from "firebase/auth";
+import {useNavigate} from "react-router-dom";
 
 export default function SidePanel() {
 
   const sidebarExtended = useSelector((state) => state.ui.sidebarExtended)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const handleNewNote = () => {
+    const user = getAuth().currentUser;
+    const newNoteKey = firebaseNotesService.createNote();
+    navigate(`/edit/${user.uid}/${newNoteKey}`);
+  }
 
   return (
     <div className={`cn_sidebar ${sidebarExtended ? 'md:w-96 p-4' : '-transform-x-full  w-0 px-0'}`}>
@@ -29,7 +38,7 @@ export default function SidePanel() {
         <div className='ml-auto mt-1 transition-all'>
           <DocumentPlusIcon
             className='w-4 hover:text-zinc-700 cursor-pointer '
-            onClick={() => firebaseNotesService.createNote()}
+            onClick={() => handleNewNote()}
           />
         </div>
       </div>

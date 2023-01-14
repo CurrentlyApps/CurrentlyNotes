@@ -98,12 +98,12 @@ const firebaseNotesService = {
       body: "Click here to edit",
     }
 
-
-
     store.dispatch(setIsSavingData(true));
     update(ref(db), updates).then(() => {
       store.dispatch(setIsSavingData(false));
     });
+
+    return newNoteKey;
   }
 }
 
