@@ -1,16 +1,16 @@
 .scrollbar_thin::-webkit-scrollbar {
-    width: 14px;
+    width: 12px;
     height: 14px;
 }
 
 .scrollbar_thin::-webkit-scrollbar-track {
-    @apply bg-zinc-200;
+    @apply bg-zinc-100;
     border-radius: 100vh;
 
 }
 
 .scrollbar_thin::-webkit-scrollbar-thumb {
-    @apply bg-zinc-700;
+    @apply bg-zinc-500;
     border-radius: 100vh;
     border: 3px solid #f6f7ed;
 }

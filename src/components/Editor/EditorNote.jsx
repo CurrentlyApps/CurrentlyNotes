@@ -89,7 +89,7 @@ export default function EditorNote() {
             </div>
 
             <div className={`h-full overflow-y-auto scrollbar_thin pb-40`}>
-              <div className="text-xl font-semibold">
+              <div className="text-lg font-bold text-zinc-600 mb-6">
                 { note_meta.title }
               </div>
               <div className={`prose prose-stone`} >

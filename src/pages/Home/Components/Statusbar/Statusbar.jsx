@@ -14,13 +14,13 @@ export default function Statusbar() {
   return (
       <div className="w-full text-zinc-200 bg-zinc-900 lg:px-6 px-2 py-2 flex lg:justify-between drop-shadow-xl">
 
-          <div className={"w-1/3"}>
+          <div className={"md:w-1/3 1/4"}>
             <Bars3Icon
               onClick={ () => { dispatch(toggleSidebar())} }
               className={`${sidebarExtended ? 'rotate-180' : ''} cursor-pointer transition-all duration-300 w-7 h-7 my-auto `}
             />
           </div>
-          <div className="lg:mx-auto w-1/3 flex justify-center ">
+          <div className="lg:mx-auto md:w-1/3 grow flex justify-center ">
 
             <Routes>
               <Route path="/edit/:user_id/:note_id" element={<StatusBarNoteTitle/>} />
