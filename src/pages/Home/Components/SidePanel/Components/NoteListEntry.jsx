@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {openModal, setModalData} from "stores/UI/uiModals";
 import firebaseNotesService from "services/firebaseNotesService";
 import {toggleSidebar} from "../../../../../stores/UI/uiSlice";
+import {addPopup} from "stores/UI/globalPopupSlice";
 
 export default function NoteListEntry(props) {
   const { post_id } = useParams();
@@ -27,9 +28,13 @@ export default function NoteListEntry(props) {
   }
   const handleDelete = () => {
 
-    firebaseNotesService.deleteNote(note_meta.id)
+    firebaseNotesService.deleteNote(note_meta)
     navigate("/");
-
+    dispatch(addPopup({
+      title: "Note Deleted",
+      message: "Your note has been deleted",
+      type: "success"
+    }));
   }
 
   return (
