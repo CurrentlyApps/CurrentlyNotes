@@ -103,7 +103,7 @@ export default function SignIn() {
         </a>
       </div>
       <div className="w-full">
-        <Button onClick={ signInWithPasswordClick } >
+        <Button onClick={ signInWithPasswordClick }>
           {
             isLoading ?
               <Spinner className="w-5 h-5 text-white" />
@@ -115,7 +115,7 @@ export default function SignIn() {
       <div className={"w-full text-center"}>
         Or
       </div>
-      <Button color="light" className={"btn p-2 btn-primary mx-auto"} onClick={() => signInWithGoogleClick()}>
+      <Button color={"light"} onClick={() => signInWithGoogleClick()}>
         <div className={"flex flex-row "}>
           {
             isLoadingGoogle ?
