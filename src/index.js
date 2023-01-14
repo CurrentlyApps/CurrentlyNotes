@@ -14,9 +14,17 @@ import AuthRouter from "./pages/Auth/router";
 import ErrorRouter from "./pages/Common/router";
 import HomeRouter from "./pages/Home/router";
 import SharedNoteRouter from "./pages/Publish/router";
-
+import showdownHighlight from "showdown-highlight";
+import 'highlight.js/styles/github-dark-dimmed.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const showdown = require('showdown');
+showdown.setOption('tasklists', true);
+showdown.setOption('smoothLivePreview', true);
+showdown.setOption('smartIndentationFix', true);
+showdown.setOption('emoji', true);
+showdown.setOption('extensions', [showdownHighlight({ pre: true })]);
 
 root.render(
   <Provider store={store} >

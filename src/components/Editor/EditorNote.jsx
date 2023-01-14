@@ -1,23 +1,14 @@
 import {  useState } from "react"
 import parse from 'html-react-parser';
 import { useSelector} from "react-redux";
-import firebaseNotesService from "../../services/firebaseNotesService";
+import firebaseNotesService from "services/firebaseNotesService";
 import {Spinner} from "flowbite-react";
-import 'highlight.js/styles/github-dark-dimmed.css';
-import showdownHighlight from "showdown-highlight";
 import Showdown from "showdown";
 
-const converter = new Showdown.Converter({
-  'tasklists': true,
-  'smoothLivePreview': true,
-  'smartIndentationFix': true,
-  'emoji': true,
-  'extensions': [showdownHighlight({ pre: true })]
-});
 
 export default function EditorNote() {
 
-
+  const converter = new Showdown.Converter();
 
   converter.setFlavor('github');
   const [showPreview, setShowPreview] = useState(true)
