@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import {openModal, setModalData} from "stores/UI/uiModals";
 import firebaseNotesService from "services/firebaseNotesService";
+import {toggleSidebar} from "../../../../../stores/UI/uiSlice";
 
 export default function NoteListEntry(props) {
   const { post_id } = useParams();
@@ -19,6 +20,10 @@ export default function NoteListEntry(props) {
 
   const entryClick = () => {
     navigate(`/edit/${user.uid}/${note_meta.id}`)
+    let mediaQuery = window.matchMedia('(max-width: 768px)');
+    if (mediaQuery.matches) {
+      dispatch(toggleSidebar(false));
+    }
   }
 
   return (
