@@ -36,9 +36,9 @@ export default function About() {
   document.title = note_meta.title + " - Currently Notes";
 
   return (
-    <div className="w-screen min-h-screen h-fit lg:px-72 scrollbar_thin overflow-y-scroll bg-zinc-100">
-        <div className="h-screen  pt-5 px-40">
-          <div className={`prose prose-stone`} >
+    <div className="w-screen min-h-screen h-full scrollbar_thin overflow-y-scroll bg-zinc-100">
+        <div className="h-screen md:mx-auto pt-5 md:w-1/2">
+          <div className={`prose max-w-none  prose-stone `} >
             {
               parse(converter.makeHtml(note_content.body))
             }
