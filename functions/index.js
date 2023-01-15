@@ -26,14 +26,13 @@ exports.createUserDefaultDataV2 = functions.auth.user().onCreate((user) => {
       isVerified: isVerified,
     });
   });
-
   admin.database().ref(`notes_meta/${user.uid}`).set({
     "0": {
       id: "0",
       user_id: user.uid,
       title: "Welcome to Currently Notes",
-      created_at: admin.database.ServerValue.TIMESTAMP,
-      updated_at: admin.database.ServerValue.TIMESTAMP,
+      created_at: Date.now(),
+      updated_at: Date.now(),
       privacy: "private",
     },
   });
