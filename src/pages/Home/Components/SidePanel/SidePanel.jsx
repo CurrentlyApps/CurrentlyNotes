@@ -11,6 +11,7 @@ import SharedWithYou from "./Components/SharedWithYou";
 export default function SidePanel() {
 
   const sidebarExtended = useSelector((state) => state.ui.sidebarExtended)
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -25,36 +26,36 @@ export default function SidePanel() {
   }
 
   return (
-    <div className={`cn_sidebar ${sidebarExtended ? 'md:w-96 p-4' : '-transform-x-full  w-0 px-0'}`}>
-
-      <div className="inline-block px-3 mb-5 relative flex flex-row " >
-        <div className="cn_title ">Currently Notes</div>
-        <Bars3Icon
-          onClick={ () => { dispatch(toggleSidebar())} }
-          className={`${sidebarExtended ? 'rotate-180' : ''}
+    <>
+      <div className={`cn_sidebar ${sidebarExtended ? 'md:w-96 p-4' : '-transform-x-full  w-0 px-0'}`}>
+        <div className="inline-block px-3 mb-5 relative flex flex-row " >
+          <div className="cn_title ">Currently Notes</div>
+          <Bars3Icon
+            onClick={ () => { dispatch(toggleSidebar())} }
+            className={`${sidebarExtended ? 'rotate-180' : ''}
           md:hidden ml-auto cursor-pointer transition-all duration-300 w-7 h-7 my-auto `}
-        />
-      </div>
-
-      <SidePanelProfile/>
-
-      <div className='flex flex-row text-lg block font-semibold pb-4 px-4'>
-        Your Notes
-        <div className='ml-auto mt-1 transition-all'>
-          <DocumentPlusIcon
-            className='w-4 hover:text-zinc-700 cursor-pointer '
-            onClick={() => handleNewNote()}
           />
         </div>
+
+        <SidePanelProfile/>
+
+        <div className='flex flex-row text-lg block font-semibold pb-4 px-4'>
+          Your Notes
+          <div className='ml-auto mt-1 transition-all'>
+            <DocumentPlusIcon
+              className='w-4 hover:text-zinc-700 cursor-pointer '
+              onClick={() => handleNewNote()}
+            />
+          </div>
+        </div>
+        <div className={"min-h-[1/2] grow overflow-auto"}>
+          <NoteList/>
+        </div>
+        <div className={"max-h-[1/2]"}>
+          <SharedWithYou/>
+        </div>
       </div>
-      <div className={"h-1/2 resize-y"}>
-        <NoteList/>
-      </div>
-      <hr/>
-      <div className={"h-1/2 "}>
-        <SharedWithYou/>
-      </div>
-    </div>
+    </>
     )
 }
 
