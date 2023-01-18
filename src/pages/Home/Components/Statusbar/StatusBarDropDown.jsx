@@ -4,10 +4,32 @@ import {ArrowRightOnRectangleIcon, Cog6ToothIcon, HomeModernIcon, UserIcon} from
 import {useDispatch, useSelector} from "react-redux";
 import {openModal} from "stores/UI/uiModals";
 import authService from "services/firebaseAuthService";
+import { getFunctions, httpsCallable} from "firebase/functions";
 export default function StatusBarDropDown() {
     const user = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const isOnline = useSelector(state => state.firebase.isOnline);
+
+    const functions = getFunctions();
+    const shareNoteToUser = httpsCallable(functions, 'shareNoteToUser');
+
+    const handleShareNote = () => {
+        shareNoteToUser({
+            canCollab: true,
+            canPublish: true,
+            allowPublishPublic: true,
+            allowCollabPublic: false,
+            collabUsers: ['orange.grass.850@example.com'],
+            publishUsers: [],
+            noteMeta: {
+                created_at: 1673777488490,
+                id: '0',
+                title: 'test',
+                user_id: 'uDzAxJxrIem7HY8sRIo0Wedg1H4H',
+            }
+        });
+    }
+
     return (
         <div className="my-auto p-0">
             <Dropdown label={
@@ -37,7 +59,7 @@ export default function StatusBarDropDown() {
                                 <UserIcon className="w-4 mr-2"/>
                                 Account Settings
                             </Dropdown.Item>
-                            <Dropdown.Item>
+                            <Dropdown.Item onClick={ ()=>handleShareNote()}>
                                 <Cog6ToothIcon className={"w-4 mr-2"} />
                                 App Settings
                             </Dropdown.Item>

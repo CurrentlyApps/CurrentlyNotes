@@ -83,7 +83,7 @@ export default function EditorNote() {
 
         <textarea
           onKeyDown={ handleTab }
-          className="h-full border-none outline-none px-0 focus:ring-0 overflow-auto scrollbar_thin pb-40"
+          className="h-full border-none resize-none outline-none px-0 focus:ring-0 overflow-auto scrollbar_thin pb-40"
           value={ note_content.body }
           onChange={ updateBody }
           placeholder={"Start typing your note here..."}

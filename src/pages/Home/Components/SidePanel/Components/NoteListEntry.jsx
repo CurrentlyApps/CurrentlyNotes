@@ -47,7 +47,7 @@ export default function NoteListEntry(props) {
           <PrivacyIcons note={note_meta} />
           <div className='mr-4 ml-auto my-auto'>
               <Dropdown label="" inline={true}>
-                  <Dropdown.Item onClick={ () => openShareModal(note_meta.id)}>
+                  <Dropdown.Item onClick={ () => openShareModal(note_meta)}>
                       <div className='mr-auto'>
                           Share
                       </div>

@@ -9,9 +9,13 @@ export const setNotePrivacy = function(note, privacy) {
 }
 
 
-export function getShareableLink(note) {
+export function getShareableLink(note, privacy) {
     let user = store.getState().auth;
-    return `${window.location.host}/page/${user.uid}/${note.id}`;
+    if( privacy === "publish") {
+        return `${window.location.host}/page/${user.uid}/${note.id}`;
+    } else if (privacy === "collab") {
+        return `${window.location.host}/edit/${user.uid}/${note.id}`;
+    }
 }
 
 export function copyShareableLink(note) {

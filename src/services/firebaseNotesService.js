@@ -13,7 +13,6 @@ import {setNoteContent, setNoteMeta, setNotes} from "stores/Notes/notesSlice";
 import store from "stores/store";
 import {setIsSavingData} from "stores/UI/uiSlice";
 
-
 const firebaseNotesService = {
   getNotesList : () => {
     let user = store.getState().auth;
@@ -104,7 +103,7 @@ const firebaseNotesService = {
     });
 
     return newNoteKey;
-  }
+  },
 }
 
 export default firebaseNotesService;

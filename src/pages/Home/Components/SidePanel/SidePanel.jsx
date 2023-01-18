@@ -6,6 +6,7 @@ import NoteList from "./Components/NoteList";
 import firebaseNotesService from "services/firebaseNotesService";
 import {getAuth} from "firebase/auth";
 import {useNavigate} from "react-router-dom";
+import SharedWithYou from "./Components/SharedWithYou";
 
 export default function SidePanel() {
 
@@ -46,7 +47,13 @@ export default function SidePanel() {
           />
         </div>
       </div>
-      <NoteList/>
+      <div className={"h-1/2 resize-y"}>
+        <NoteList/>
+      </div>
+      <hr/>
+      <div className={"h-1/2 "}>
+        <SharedWithYou/>
+      </div>
     </div>
     )
 }
