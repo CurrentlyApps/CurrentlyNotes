@@ -6,13 +6,26 @@ import {useDispatch, useSelector} from "react-redux";
 import {toggleSidebar} from "stores/UI/uiSlice";
 import {Route, Routes} from "react-router-dom";
 import {getAuth} from "firebase/auth";
+import {useEffect, useState} from "react";
 
 export default function Statusbar() {
   const sidebarExtended = useSelector((state) => state.ui.sidebarExtended)
+  const [isUsersNote, setIsUsersNote] = useState(true)
   const note_meta = useSelector(state => state.notes.note_meta)
   const dispatch = useDispatch()
   const user = useSelector(state => state.auth);
-  const current_user = getAuth().currentUser;
+
+  useEffect(() => {
+    getAuth().onAuthStateChanged((user) => {
+      if (user) {
+        if (note_meta.user_id === user.uid) {
+          setIsUsersNote(true)
+        } else {
+          setIsUsersNote(false)
+        }
+      }
+    });
+  });
 
 
   return (
@@ -30,9 +43,10 @@ export default function Statusbar() {
               <Route path="/edit/:user_id/:note_id" element={
                 <>
                   <StatusBarNoteTitle/>
-                  { note_meta.user_id !== current_user.uid ?
+                  { !isUsersNote ?
                     <UsersIcon className={"w-4 my-auto"}/>
-                    : ""}
+                    : ""
+                  }
                 </>
               } />
             </Routes>
