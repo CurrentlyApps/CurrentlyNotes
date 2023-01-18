@@ -58,6 +58,10 @@ exports.shareNoteToUser = functions.https.onCall(async (data, context) => {
     allowCollabPublic: data.allowCollabPublic,
   };
 
+  // Handle Note Meta
+  db.ref(`notes_meta/${fromUser}/${noteMeta.id}/collab`).set(data.canCollab);
+  db.ref(`notes_meta/${fromUser}/${noteMeta.id}/publish`).set(data.canPublish);
+
   // Handle Removed Users
   const currentData = await db.ref(`/notes_share/notes/${fromUser}/${noteMeta.id}`).get();
   if (currentData.exists()) {

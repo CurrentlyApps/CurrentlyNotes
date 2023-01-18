@@ -1,12 +1,12 @@
 import { TrashIcon, ShareIcon } from '@heroicons/react/24/solid'
 import { Dropdown } from 'flowbite-react';
-import PrivacyIcons from './PrivacyIcons';
 import { useNavigate, useParams } from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import {openModal, setModalData} from "stores/UI/uiModals";
 import firebaseNotesService from "services/firebaseNotesService";
-import {toggleSidebar} from "../../../../../stores/UI/uiSlice";
+import {toggleSidebar} from "stores/UI/uiSlice";
 import {addPopup} from "stores/UI/globalPopupSlice";
+import {UsersIcon} from "@heroicons/react/24/solid";
 
 export default function NoteListEntry(props) {
   const { post_id } = useParams();
@@ -38,29 +38,31 @@ export default function NoteListEntry(props) {
   }
 
   return (
-      <div key={note_meta.id} className={`flex flex-row  hover:bg-zinc-300 ${post_id === note_meta.id ? 'font-bold bg-zinc-400 text-slate-100':'font-normal text-zinc-700'}`}>
-          <div
-          onClick={() => entryClick() }
-          className={`px-4 py-1 truncate overflow-hidden text-sm w-full cursor-pointer font-mono tracking-tighter `}>
-              { note_meta.title !== "" ? note_meta.title : "Untitled" }
-          </div>
-          <PrivacyIcons note={note_meta} />
-          <div className='mr-4 ml-auto my-auto'>
-              <Dropdown label="" inline={true}>
-                  <Dropdown.Item onClick={ () => openShareModal(note_meta)}>
-                      <div className='mr-auto'>
-                          Share
-                      </div>
-                      <ShareIcon className='w-4 ml-2 cursor-pointer hover:text-zinc-700'/>
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={ () => handleDelete() }>
-                      <div className='mr-auto'>
-                          Delete
-                      </div>
-                      <TrashIcon className='w-4 ml-2 cursor-pointer hover:text-zinc-700' ></TrashIcon>
-                  </Dropdown.Item>
-              </Dropdown>
-          </div>
+    <div key={note_meta.id} className={`flex flex-row  hover:bg-zinc-300 ${post_id === note_meta.id ? 'font-bold bg-zinc-400 text-slate-100':'font-normal text-zinc-700'}`}>
+      <div
+      onClick={() => entryClick() }
+      className={`px-4 py-1 truncate overflow-hidden text-sm w-full cursor-pointer font-mono tracking-tighter `}>
+        { note_meta.title !== "" ? note_meta.title : "Untitled" }
       </div>
+      {
+        note_meta.collab || note_meta.publish ? <UsersIcon className={"w-5"}/> : ""
+      }
+      <div className='mr-4 ml-auto my-auto'>
+        <Dropdown label="" inline={true}>
+          <Dropdown.Item onClick={ () => openShareModal(note_meta)}>
+            <div className='mr-auto'>
+                Share
+            </div>
+            <ShareIcon className='w-4 ml-2 cursor-pointer hover:text-zinc-700'/>
+          </Dropdown.Item>
+          <Dropdown.Item onClick={ () => handleDelete() }>
+            <div className='mr-auto'>
+                Delete
+            </div>
+            <TrashIcon className='w-4 ml-2 cursor-pointer hover:text-zinc-700' ></TrashIcon>
+          </Dropdown.Item>
+        </Dropdown>
+      </div>
+    </div>
   )
 }
