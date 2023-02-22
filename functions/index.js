@@ -42,7 +42,7 @@ exports.createUserDefaultDataV2 = functions.auth.user().onCreate((user) => {
   return admin.database().ref(`notes_content/${user.uid}`).set({
     "0": {
       id: "0",
-      body: "This is your first note. You can edit it by clicking on it.",
+      body: "",
       user_id: user.uid,
     },
   });
